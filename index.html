@@ -35,6 +35,8 @@
   --b-fh: #46707f;   --b-fh-ink: #ffffff;
   --b-hbb: #8a5a14;  --b-hbb-ink: #ffffff;
 
+  --hero-bg: #c8102e; --hero-ink: #ffffff; --hero-muted: rgb(255 255 255 / .84); --hero-line: rgb(255 255 255 / .35);
+  --stripe: rgb(27 33 30 / .035);
   --f-display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
   --f-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
 }
@@ -55,6 +57,7 @@
     --b-uni: #3b6b80;  --b-uni-ink: #ffffff;
     --b-fh: #2f5462;   --b-fh-ink: #ffffff;
     --b-hbb: #6e4a16;  --b-hbb-ink: #ffffff;
+    --hero-bg: #8c0b20; --stripe: rgb(255 255 255 / .03);
     color-scheme: dark;
   }
 }
@@ -74,19 +77,21 @@
   --b-uni: #3b6b80;  --b-uni-ink: #ffffff;
   --b-fh: #2f5462;   --b-fh-ink: #ffffff;
   --b-hbb: #6e4a16;  --b-hbb-ink: #ffffff;
+  --hero-bg: #8c0b20; --stripe: rgb(255 255 255 / .03);
   color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
 body {
+  margin: 0;
   background: var(--bg); color: var(--ink);
-  font-family: var(--f-body); font-size: 17px; line-height: 1.55;
+  font-family: var(--f-body); font-size: 18px; line-height: 1.55;
 }
 .wrap {
   max-width: 1120px; margin: 0 auto;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 28px 64px;
+  padding-block: 48px 64px;
   display: flex; flex-direction: column; gap: 56px;
 }
 h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.1; }
@@ -101,29 +106,44 @@ button { font: inherit; color: inherit; }
 section { display: flex; flex-direction: column; gap: 18px; scroll-margin-top: 16px; }
 .lead { color: var(--muted); font-size: 1.05rem; }
 
-/* Header */
-header { display: flex; flex-direction: column; gap: 18px; }
+/* Hero */
+.hero { background: var(--hero-bg); color: var(--hero-ink); position: relative; overflow: hidden; }
+.hero::after {
+  content: ""; position: absolute; right: -90px; top: 50%; width: 460px; height: 460px; transform: translateY(-50%); pointer-events: none;
+  background: linear-gradient(var(--hero-line), var(--hero-line)) center / 24% 78% no-repeat, linear-gradient(var(--hero-line), var(--hero-line)) center / 78% 24% no-repeat;
+  opacity: .45;
+}
+.hero-in {
+  position: relative; z-index: 1; max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 22px 40px; display: flex; flex-direction: column; gap: 22px;
+}
+.hero .eyebrow { color: var(--hero-muted); }
+.hero h1 { font-size: clamp(2.4rem, 6.4vw, 4.6rem); max-width: 14ch; }
+.hero .lead { color: var(--hero-muted); font-size: 1.15rem; max-width: 58ch; }
+.hero .lead strong { color: var(--hero-ink); }
 .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.flag { width: 40px; height: 40px; background: var(--accent); position: relative; flex: none; border-radius: 4px; }
-.flag::before, .flag::after { content: ""; position: absolute; background: var(--accent-ink); left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.flag { width: 40px; height: 40px; background: var(--hero-ink); position: relative; flex: none; border-radius: 4px; }
+.flag::before, .flag::after { content: ""; position: absolute; background: var(--hero-bg); left: 50%; top: 50%; transform: translate(-50%, -50%); }
 .flag::before { width: 24px; height: 7.5px; }
 .flag::after { width: 7.5px; height: 24px; }
 .brand { display: flex; align-items: center; gap: 12px; }
 nav { display: flex; gap: 6px; flex-wrap: wrap; }
-nav a { text-decoration: none; color: var(--ink); font-size: .92rem; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
-nav a:hover { border-color: var(--accent); color: var(--accent); }
-.facts { display: flex; flex-wrap: wrap; gap: 10px 28px; padding-top: 6px; border-top: 1px solid var(--line); }
-.facts div { display: flex; align-items: baseline; gap: 8px; padding-top: 10px; }
-.facts b { font-family: var(--f-display); font-size: 1.7rem; color: var(--accent); font-variant-numeric: tabular-nums; }
-.facts span { color: var(--muted); font-size: .95rem; }
+nav a { text-decoration: none; color: var(--hero-ink); font-size: .92rem; padding: 6px 12px; border: 1px solid var(--hero-line); border-radius: 999px; }
+nav a:hover { background: var(--hero-ink); color: var(--hero-bg); }
+.hero :focus-visible { outline-color: var(--hero-ink); }
+.facts { display: flex; flex-wrap: wrap; gap: 14px 40px; padding-top: 18px; border-top: 1px solid var(--hero-line); }
+.facts div { display: flex; flex-direction: column; gap: 2px; }
+.facts b { font-family: var(--f-display); font-size: clamp(2.2rem, 4.5vw, 3rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.facts span { color: var(--hero-muted); font-size: .95rem; max-width: 22ch; }
 
 /* Diagram */
 .dia-scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
 .dia {
-  display: grid; min-width: 880px;
+  display: grid; min-width: 920px;
   grid-template-columns: repeat(18, minmax(44px, 1fr));
-  grid-template-rows: auto auto auto repeat(5, 62px);
-  gap: 4px;
+  grid-template-rows: auto auto auto repeat(5, 76px);
+  gap: 6px;
 }
 .hd { font-size: .8rem; color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; align-self: end; }
 .hd.age { font-weight: 700; color: var(--ink); }
@@ -133,16 +153,32 @@ nav a:hover { border-color: var(--accent); color: var(--accent); }
 .band.ter { border-color: var(--b-uni); }
 .blk {
   border: 0; border-radius: 6px; cursor: pointer; text-align: left;
-  padding: 6px 9px; display: flex; flex-direction: column; justify-content: center; gap: 1px;
+  padding: 6px 12px 6px 18px; display: flex; flex-direction: column; justify-content: center; gap: 1px;
   position: relative; min-width: 0; overflow: hidden;
   transition: opacity .25s, transform .15s, box-shadow .15s;
 }
 .blk:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgb(0 0 0 / .18); }
-.blk .n { font-family: var(--f-display); font-weight: 600; font-size: .9rem; line-height: 1.15; }
-.blk .s { font-size: .74rem; opacity: .85; line-height: 1.2; }
+.blk .n { font-family: var(--f-display); font-weight: 700; font-size: 1rem; line-height: 1.15; }
+.colbg { background: var(--stripe); border-radius: 4px; }
+.dia .blk { z-index: 1; }
+.blk .s { font-size: .8rem; opacity: .85; line-height: 1.2; }
 .blk.sel { box-shadow: 0 0 0 3px var(--ink); }
-.blk.tall { justify-content: flex-start; padding-top: 12px; }
-.dia.pathmode .blk:not(.on) { opacity: .18; }
+.blk.tall { justify-content: flex-start; padding: 16px 14px; }
+.blk.tall .n { font-size: 1.15rem; hyphens: auto; overflow-wrap: anywhere; }
+.blk.tall .s { font-size: .88rem; }
+.dia { position: relative; }
+.dia.pathmode .blk:not(.on) { opacity: .16; }
+.dia.pathmode .colbg { opacity: 0; }
+.arrows { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: visible; }
+.arrows path { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
+.arrows path.halo { stroke: var(--surface); stroke-width: 8; stroke-dasharray: none; }
+.arrows path.up { stroke-dasharray: 1 7; }
+.arrows marker path { fill: var(--ink); stroke: none; }
+.flow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+.flow h4 { margin: 0 0 6px; font-family: var(--f-display); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.flow .chips button { cursor: pointer; border: 0; border-radius: 6px; padding: 4px 10px; font-size: .85rem; font-weight: 700; }
+.flow .chips button:hover { filter: brightness(1.08); }
+.flow .none { font-size: .9rem; color: var(--muted); }
 .badge { position: absolute; top: 5px; right: 6px; width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: var(--bg); font-size: .75rem; font-weight: 700; display: grid; place-items: center; }
 
 .kg   { background: var(--b-kg);   color: var(--b-kg-ink); }
@@ -186,6 +222,8 @@ nav a:hover { border-color: var(--accent); color: var(--accent); }
 .person[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
 .person .who { font-family: var(--f-display); font-weight: 700; font-size: 1.1rem; }
 .person .what { font-size: .88rem; color: var(--muted); }
+.trail { display: flex; gap: 3px; margin-top: 8px; }
+.trail i { height: 8px; flex: 1; border-radius: 2px; }
 .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; counter-reset: st; }
 .steps li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); counter-increment: st; }
 .steps li::before { content: counter(st); width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: var(--bg); font-weight: 700; font-size: .85rem; display: grid; place-items: center; }
@@ -204,20 +242,26 @@ tbody th { font-weight: 700; width: 22%; }
 tbody tr:last-child > * { border-bottom: 0; }
 
 /* Quiz */
-.quiz { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
-.q { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-.q .qt { font-weight: 700; }
-.q .opts { display: flex; flex-direction: column; gap: 6px; }
-.q .opts button { text-align: left; border: 1px solid var(--line); background: var(--bg); border-radius: 8px; padding: 8px 12px; cursor: pointer; }
-.q .opts button:hover:not(:disabled) { border-color: var(--ink); }
-.q .opts button:disabled { cursor: default; }
-.q .opts button.right { border-color: var(--ok); color: var(--ok); font-weight: 700; }
-.q .opts button.wrong { border-color: var(--bad); color: var(--bad); text-decoration: line-through; }
-.q .why { font-size: .9rem; color: var(--muted); }
-.scorebar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-.score { font-family: var(--f-display); font-weight: 700; font-size: 1.3rem; font-variant-numeric: tabular-nums; }
-.btn { border: 1px solid var(--ink); background: var(--ink); color: var(--bg); border-radius: 8px; padding: 8px 16px; cursor: pointer; font-weight: 700; }
+.qcard { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: clamp(18px, 4vw, 34px); display: flex; flex-direction: column; gap: 18px; max-width: 820px; }
+.qhead { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.dots { display: flex; gap: 6px; }
+.dots i { width: 28px; height: 6px; border-radius: 3px; background: var(--line); }
+.dots i.r { background: var(--ok); } .dots i.w { background: var(--bad); } .dots i.cur { background: var(--ink); }
+.qt { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.35rem, 3vw, 1.9rem); line-height: 1.2; text-wrap: balance; }
+.opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.opts button { text-align: left; border: 2px solid var(--line); background: var(--bg); border-radius: 10px; padding: 14px 16px; cursor: pointer; font-size: 1.05rem; display: flex; gap: 12px; align-items: center; }
+.opts button .k { font-family: var(--f-display); font-weight: 700; width: 28px; height: 28px; border-radius: 50%; border: 2px solid currentColor; display: grid; place-items: center; flex: none; font-size: .85rem; }
+.opts button:hover:not(:disabled) { border-color: var(--ink); }
+.opts button:disabled { cursor: default; }
+.opts button.right { border-color: var(--ok); color: var(--ok); font-weight: 700; }
+.opts button.wrong { border-color: var(--bad); color: var(--bad); }
+.why { color: var(--muted); min-height: 1.5em; }
+.qnav { display: flex; gap: 10px; justify-content: space-between; flex-wrap: wrap; align-items: center; }
+.score { font-family: var(--f-display); font-weight: 700; font-size: 1.1rem; font-variant-numeric: tabular-nums; color: var(--muted); }
+.result { font-family: var(--f-display); font-size: clamp(2.4rem, 6vw, 3.6rem); font-weight: 700; color: var(--accent); line-height: 1; }
+.btn { border: 1px solid var(--ink); background: var(--ink); color: var(--bg); border-radius: 8px; padding: 10px 18px; cursor: pointer; font-weight: 700; }
 .btn.ghost { background: transparent; color: var(--ink); }
+.btn:disabled { opacity: .35; cursor: default; }
 
 /* Presenter */
 details.notes { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
@@ -252,8 +296,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
 </head>
 <body>
 
-<div class="wrap">
-  <header>
+<header class="hero" lang="de-CH"><div class="hero-in">
     <div class="top">
       <div class="brand"><span class="flag" aria-hidden="true"></span><span class="eyebrow">Präsentation · Deutsch B1.1 · Beispiel Kanton Aargau</span></div>
       <nav aria-label="Abschnitte">
@@ -265,15 +308,17 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     <div class="facts">
       <div><b>26</b><span>Kantone sind für die Schule zuständig</span></div>
       <div><b>11</b><span>Jahre obligatorische Schule (ab 4 Jahren)</span></div>
-      <div><b>≈ ⅔</b><span>der Jugendlichen machen eine Lehre</span></div>
+      <div><b>≈ ⅔</b><span>der Jugendlichen in der Schweiz machen eine Lehre</span></div>
     </div>
-  </header>
+  </div></header>
+
+<div class="wrap" lang="de-CH">
 
   <section id="grafik">
     <span class="eyebrow">1 · Überblick</span>
     <h2>Vom Kindergarten bis zur Hochschule: der Aargau</h2>
     <div class="dia-scroll"><div class="dia" id="dia" role="group" aria-label="Schulsystem nach Alter"></div></div>
-    <p class="hint">Alter = typisches Alter am Anfang des Schuljahres. Zweite Zeile = Schuljahr im Aargau (KG = Kindergarten). Die hellere Spitze bei der Lehre EFZ zeigt: Sie dauert 3 oder 4 Jahre.</p>
+    <p class="hint">Klick auf einen Block: Die Pfeile zeigen, woher man kommt (gepunktet) und wohin man danach gehen kann. Alter = typisches Alter am Anfang des Schuljahres. Zweite Zeile = Schuljahr im Aargau (KG = Kindergarten). Die hellere Spitze bei der Lehre EFZ zeigt: Sie dauert 3 oder 4 Jahre.</p>
     <div class="detail" id="detail" aria-live="polite"></div>
   </section>
 
@@ -295,7 +340,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
           <tr><th scope="row">Wer ist zuständig?</th><td>16 Bundesländer</td><td>26 Kantone (viele im HarmoS-Konkordat, der Aargau nicht)</td></tr>
           <tr><th scope="row">Schulpflicht beginnt</th><td>mit 6 Jahren</td><td>mit 4 Jahren (Kindergarten, in den meisten Kantonen)</td></tr>
           <tr><th scope="row">Grund-/Primarschule</th><td>4 Jahre (in Berlin und Brandenburg 6)</td><td>6 Jahre</td></tr>
-          <tr><th scope="row">Trennung nach Leistung</th><td>nach der 4. Klasse</td><td>nach der 6. Klasse (8H)</td></tr>
+          <tr><th scope="row">Trennung nach Leistung</th><td>nach der 4. Klasse</td><td>nach der 6. Klasse</td></tr>
           <tr><th scope="row">Sekundarstufe I</th><td>Gymnasium, Realschule, Hauptschule, Gesamtschule</td><td>Im Aargau: Realschule, Sekundarschule, Bezirksschule (3 Jahre). Andere Kantone: Niveaus A, B, C, teilweise Langzeitgymnasium</td></tr>
           <tr><th scope="row">Abschluss für die Uni</th><td>Abitur</td><td>Matura (gymnasiale Maturität)</td></tr>
           <tr><th scope="row">Häufigster Weg nach der Schule</th><td>Duale Ausbildung ist wichtig, aber viele machen Abitur und studieren</td><td>Lehre: rund zwei Drittel der Jugendlichen</td></tr>
@@ -308,8 +353,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
   <section id="quiz">
     <span class="eyebrow">4 · Mitmachen</span>
     <h2>Quiz für die Klasse</h2>
-    <div class="scorebar"><span class="score" id="score">0 / 7</span><button class="btn ghost" id="qreset" type="button">Neu starten</button></div>
-    <div class="quiz" id="qz"></div>
+    <div class="qcard" id="qz" aria-live="polite"></div>
   </section>
 
   <section id="sprechertext">
@@ -424,6 +468,8 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     var b = el("div", "band" + x[3], x[0]); place(b, x[1], x[2], 3, 1); dia.appendChild(b);
   });
 
+  for (var c = 1; c <= 18; c += 2) { var cb = el("div", "colbg"); cb.setAttribute("aria-hidden", "true"); place(cb, c, 1, 4, 5); dia.appendChild(cb); }
+
   Object.keys(B).forEach(function (k) {
     var b = B[k];
     var btn = el("button", "blk " + b.cls + (b.rows > 2 ? " tall" : ""));
@@ -435,6 +481,64 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     dia.appendChild(btn); buttons[k] = btn;
   });
 
+  // Wege zwischen den Blöcken (Aargau): von → nach
+  var NEXT = {
+    kg: ["prim"], prim: ["sa", "sb", "sc"],
+    sa: ["gym", "fms", "efz", "bm"], sb: ["efz", "bm", "fms"], sc: ["eba", "efz"],
+    gym: ["uni", "fh"], fms: ["fh"], bm: ["fh", "uni"], efz: ["bm", "hbb"], eba: ["efz"],
+    uni: [], fh: [], hbb: []
+  };
+  var PREV = {};
+  Object.keys(B).forEach(function (k) { PREV[k] = []; });
+  Object.keys(NEXT).forEach(function (a) { NEXT[a].forEach(function (b) { PREV[b].push(a); }); });
+  function reach(start, g) {
+    var seen = {}, st = [start];
+    while (st.length) { var x = st.pop(); g[x].forEach(function (y) { if (!seen[y]) { seen[y] = 1; st.push(y); } }); }
+    return Object.keys(seen);
+  }
+
+  var SVGNS = "http://www.w3.org/2000/svg";
+  var svg = document.createElementNS(SVGNS, "svg");
+  svg.setAttribute("class", "arrows"); svg.setAttribute("aria-hidden", "true");
+  svg.innerHTML = '<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z"/></marker></defs><g></g>';
+  dia.appendChild(svg);
+  var edges = [];
+  function drawArrows() {
+    var g = svg.querySelector("g"); g.innerHTML = "";
+    var base = dia.getBoundingClientRect();
+    edges.forEach(function (e) {
+      var a = buttons[e[0]].getBoundingClientRect(), b = buttons[e[1]].getBoundingClientRect(), d;
+      var ax, ay, bx, by, IN = 8, OUT = 12;
+      if (b.left >= a.right - 4) {
+        ax = a.right - base.left - IN; ay = a.top + Math.min(a.height / 2, 38) - base.top;
+        bx = b.left - base.left + OUT; by = b.top + Math.min(b.height / 2, 38) - base.top;
+        var m = Math.max(24, (bx - ax) / 2);
+        d = "M" + ax + " " + ay + " C" + (ax + m) + " " + ay + " " + (bx - m) + " " + by + " " + bx + " " + by;
+      } else {
+        var x = (Math.max(a.left, b.left) + Math.min(a.right, b.right)) / 2 - base.left;
+        if (b.top > a.top) { ay = a.bottom - base.top - IN; by = b.top - base.top + OUT; } else { ay = a.top - base.top + IN; by = b.bottom - base.top - OUT; }
+        d = "M" + x + " " + ay + " L" + x + " " + by;
+      }
+      var halo = document.createElementNS(SVGNS, "path");
+      halo.setAttribute("d", d); halo.setAttribute("class", "halo"); g.appendChild(halo);
+      var path = document.createElementNS(SVGNS, "path");
+      path.setAttribute("d", d); path.setAttribute("marker-end", "url(#ah)");
+      if (e[2]) path.setAttribute("class", "up");
+      g.appendChild(path);
+    });
+  }
+  window.addEventListener("resize", drawArrows);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawArrows);
+
+  function highlight(ids, newEdges) {
+    clearBadges();
+    edges = newEdges || [];
+    if (!ids) { dia.classList.remove("pathmode"); drawArrows(); return; }
+    dia.classList.add("pathmode");
+    ids.forEach(function (id) { buttons[id].classList.add("on"); });
+    drawArrows();
+  }
+
   function overview() {
     detail.innerHTML =
       '<div class="main"><span class="eyebrow">So liest du die Grafik</span><h3>Von links nach rechts: das Alter</h3>' +
@@ -445,6 +549,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
       legend("var(--b-gym)", "Allgemeinbildende Schulen") + legend("var(--b-efz)", "Berufliche Grundbildung (Lehre)") +
       legend("var(--b-uni)", "Hochschulen und Höhere Berufsbildung") + "</div></div>";
     var lb = detail.querySelector(".linkbtn"); lb.addEventListener("click", function () { show("efz"); });
+    highlight(null);
   }
   function legend(c, t) { return '<span><span class="swatch" style="background:' + c + '"></span>' + t + "</span>"; }
 
@@ -452,13 +557,23 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     var b = B[k];
     if (selected) buttons[selected].classList.remove("sel");
     selected = k; buttons[k].classList.add("sel");
+    if (activePath) setPath(null, true);
+    var up = reach(k, PREV), down = reach(k, NEXT), E = [];
+    up.concat([k]).forEach(function (a) { NEXT[a].forEach(function (b) { if (b === k || up.indexOf(b) > -1) E.push([a, b, true]); }); });
+    [k].concat(down).forEach(function (a) { NEXT[a].forEach(function (b) { E.push([a, b, false]); }); });
+    highlight([k].concat(up, down), E);
+    function chips(list, empty) {
+      return list.length ? '<div class="chips">' + list.map(function (x) { return '<button type="button" class="' + B[x].cls + '" data-k="' + x + '">' + B[x].n + "</button>"; }).join("") + "</div>" : '<p class="none">' + empty + "</p>";
+    }
+    var flow = '<div class="flow"><div><h4>Woher?</h4>' + chips(PREV[k], "Hier beginnt die Schule.") + '</div><div><h4>Wohin danach?</h4>' + chips(NEXT[k], "Berufsleben oder Weiterbildung") + "</div></div>";
     var vocab = b.v.map(function (p) { return "<dt>" + p[0] + "</dt><dd>" + p[1] + "</dd>"; }).join("");
     detail.innerHTML =
       '<div class="main"><span class="eyebrow">' + legendName(b.cls) + "</span><h3>" + b.n + "</h3>" +
       '<div class="chips"><span class="chip">Alter: <b>' + b.alter + '</b></span><span class="chip">Dauer: <b>' + b.dauer + '</b></span><span class="chip">Abschluss: <b>' + b.abschluss + "</b></span></div>" +
-      "<p>" + b.t + '</p><p><button class="linkbtn" type="button">Übersicht zeigen</button></p></div>' +
+      "<p>" + b.t + "</p>" + flow + '<p><button class="linkbtn" type="button">Übersicht zeigen</button></p></div>' +
       '<div class="vocab"><h3>Wortschatz</h3><dl>' + vocab + "</dl></div>";
     detail.querySelector(".linkbtn").addEventListener("click", function () { buttons[k].classList.remove("sel"); selected = null; overview(); });
+    detail.querySelectorAll(".flow button").forEach(function (x) { x.addEventListener("click", function () { show(x.getAttribute("data-k")); }); });
   }
   function legendName(c) {
     return { kg: "Obligatorische Schule", prim: "Obligatorische Schule", sa: "Oberstufe (Sek I)", sb: "Oberstufe (Sek I)", sc: "Oberstufe (Sek I)",
@@ -472,23 +587,25 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
   var pBtns = {};
   Object.keys(PATHS).forEach(function (k) {
     var p = PATHS[k];
-    var btn = el("button", "person", '<span class="who">' + p.who + '</span><span class="what">' + p.what + "</span>");
+    var btn = el("button", "person", '<span class="who">' + p.who + '</span><span class="what">' + p.what + '</span><span class="trail" aria-hidden="true">' + p.ids.map(function (id) { return '<i class="' + B[id].cls + '"></i>'; }).join("") + "</span>");
     btn.type = "button"; btn.setAttribute("aria-pressed", "false");
     btn.addEventListener("click", function () { setPath(activePath === k ? null : k); });
     people.appendChild(btn); pBtns[k] = btn;
   });
   function clearBadges() { dia.querySelectorAll(".badge").forEach(function (b) { b.remove(); }); Object.keys(buttons).forEach(function (k) { buttons[k].classList.remove("on"); }); }
-  function setPath(k) {
+  function setPath(k, keepDetail) {
     activePath = k; clearBadges();
+    if (k && selected) { buttons[selected].classList.remove("sel"); selected = null; overview(); }
     Object.keys(pBtns).forEach(function (x) { pBtns[x].setAttribute("aria-pressed", String(x === k)); });
     if (!k) {
-      dia.classList.remove("pathmode");
+      if (!keepDetail) highlight(null);
       pathbox.innerHTML = '<p class="motto">Kein Abschluss ohne Anschluss.</p><p>Das heisst: Kein Weg ist eine Sackgasse. Nach jedem Abschluss kann man weiterlernen. Wähle oben eine Person, um ein Beispiel zu sehen.</p>';
       return;
     }
     var p = PATHS[k];
-    dia.classList.add("pathmode");
-    p.ids.forEach(function (id, i) { var b = buttons[id]; b.classList.add("on"); var s = el("span", "badge", String(i + 1)); s.setAttribute("aria-hidden", "true"); b.appendChild(s); });
+    var PE = []; for (var i = 1; i < p.ids.length; i++) PE.push([p.ids[i - 1], p.ids[i], false]);
+    highlight(p.ids, PE);
+    p.ids.forEach(function (id, i) { var b = buttons[id]; var s = el("span", "badge", String(i + 1)); s.setAttribute("aria-hidden", "true"); b.appendChild(s); });
     pathbox.innerHTML = "<h3>Der Weg von " + p.who + '</h3><ol class="steps">' +
       p.steps.map(function (s) { return '<li><div><div class="age">Alter ' + s[0] + "</div>" + s[1] + "</div></li>"; }).join("") +
       '</ol><button class="linkbtn" type="button">Grafik oben ansehen ↑</button>';
@@ -505,28 +622,35 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     ["Mit welchem Abschluss kann man ohne Prüfung an eine Fachhochschule wie die FHNW?", ["Berufsmaturität", "EBA", "Abschluss der Primarschule"], 0, "Mit der Berufsmaturität (BM)."],
     ["Was bedeutet «dual» bei der Lehre?", ["nur Schule", "Betrieb und Berufsfachschule", "zwei Sprachen lernen"], 1, "Man lernt im Betrieb und in der Berufsfachschule."]
   ];
-  var qz = document.getElementById("qz"), scoreEl = document.getElementById("score"), score = 0;
+  var qz = document.getElementById("qz"), qi = 0, ans = [];
+  function score() { return ans.filter(function (a, i) { return a === Q[i][2]; }).length; }
   function renderQuiz() {
-    score = 0; scoreEl.textContent = "0 / " + Q.length; qz.innerHTML = "";
-    Q.forEach(function (q, i) {
-      var box = el("div", "q");
-      box.appendChild(el("div", "qt", (i + 1) + ". " + q[0]));
-      var opts = el("div", "opts"), why = el("div", "why");
-      why.hidden = true;
-      q[1].forEach(function (o, j) {
-        var b = el("button", "", o); b.type = "button";
-        b.addEventListener("click", function () {
-          opts.querySelectorAll("button").forEach(function (x, xi) { x.disabled = true; if (xi === q[2]) x.classList.add("right"); });
-          if (j === q[2]) { score++; scoreEl.textContent = score + " / " + Q.length; why.textContent = "Richtig! " + q[3]; }
-          else { b.classList.add("wrong"); why.textContent = "Leider falsch. " + q[3]; }
-          why.hidden = false;
-        });
-        opts.appendChild(b);
-      });
-      box.appendChild(opts); box.appendChild(why); qz.appendChild(box);
+    var dots = '<div class="dots" aria-hidden="true">' + Q.map(function (q, i) {
+      return '<i class="' + (ans[i] == null ? (i === qi ? "cur" : "") : (ans[i] === q[2] ? "r" : "w")) + '"></i>'; }).join("") + "</div>";
+    if (qi >= Q.length) {
+      qz.innerHTML = '<div class="qhead">' + dots + '</div><div class="result">' + score() + " / " + Q.length + '</div><p class="qt">' +
+        (score() === Q.length ? "Super! Alles richtig." : score() >= 5 ? "Sehr gut gemacht!" : "Gut versucht!") +
+        '</p><div class="qnav"><span></span><button class="btn" type="button" id="qagain">Neu starten</button></div>';
+      document.getElementById("qagain").addEventListener("click", function () { qi = 0; ans = []; renderQuiz(); });
+      return;
+    }
+    var q = Q[qi], done = ans[qi] != null;
+    qz.innerHTML = '<div class="qhead"><span class="eyebrow">Frage ' + (qi + 1) + " von " + Q.length + "</span>" + dots + '</div><div class="qt">' + q[0] +
+      '</div><div class="opts"></div><div class="why"></div><div class="qnav"><button class="btn ghost" type="button" id="qprev">← Zurück</button><span class="score">' +
+      score() + ' Punkte</span><button class="btn" type="button" id="qnext">' + (qi === Q.length - 1 ? "Ergebnis" : "Weiter →") + "</button></div>";
+    var opts = qz.querySelector(".opts"), why = qz.querySelector(".why");
+    q[1].forEach(function (o, j) {
+      var b = el("button", "", '<span class="k">' + "ABC"[j] + "</span><span>" + o + "</span>"); b.type = "button";
+      if (done) { b.disabled = true; if (j === q[2]) b.classList.add("right"); else if (j === ans[qi]) b.classList.add("wrong"); }
+      b.addEventListener("click", function () { ans[qi] = j; renderQuiz(); });
+      opts.appendChild(b);
     });
+    if (done) why.textContent = (ans[qi] === q[2] ? "Richtig! " : "Leider falsch. ") + q[3];
+    var prev = document.getElementById("qprev"), next = document.getElementById("qnext");
+    prev.disabled = qi === 0; next.disabled = !done;
+    prev.addEventListener("click", function () { qi--; renderQuiz(); });
+    next.addEventListener("click", function () { qi++; renderQuiz(); });
   }
-  document.getElementById("qreset").addEventListener("click", renderQuiz);
 
   // Speaker script: [start sec, end sec, title, text, what to show]
   var PARTS = [
