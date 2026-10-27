@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Schulsystem Schweiz</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: a single reading column; the school diagram is the hero, read left→right by age like a Stundenplan */
+:root {
+  --bg: #f4f5f2;
+  --surface: #ffffff;
+  --ink: #1b211e;
+  --muted: #5a625d;
+  --line: #d8dcd5;
+  --accent: #c8102e;          /* Schweizer Rot */
+  --accent-ink: #ffffff;
+  --ok: #2f7d4f;
+  --bad: #b3261e;
+
+  /* Blockfarben: grün = obligatorisch, blau = Sek I, rot = allgemeinbildend, ocker = Beruf, petrol = Tertiär */
+  --b-kg: #d4e6be;   --b-kg-ink: #1d2a12;
+  --b-prim: #a8cd8b; --b-prim-ink: #15240c;
+  --b-sa: #8ea6c8;   --b-sa-ink: #0f1c2e;
+  --b-sb: #adc0dc;   --b-sb-ink: #0f1c2e;
+  --b-sc: #ccd8ea;   --b-sc-ink: #0f1c2e;
+  --b-gym: #c8102e;  --b-gym-ink: #ffffff;
+  --b-fms: #ef9aa0;  --b-fms-ink: #3a0710;
+  --b-efz: #e3a038;  --b-efz2: #f0c57f; --b-efz-ink: #2d1c02;
+  --b-bm: #f3cf86;   --b-bm-ink: #2d1c02;
+  --b-eba: #f7e2b4;  --b-eba-ink: #2d1c02;
+  --b-uni: #24414f;  --b-uni-ink: #ffffff;
+  --b-fh: #46707f;   --b-fh-ink: #ffffff;
+  --b-hbb: #8a5a14;  --b-hbb-ink: #ffffff;
+
+  --f-display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141816; --surface: #1d2320; --ink: #e9ece8; --muted: #a3aba6; --line: #343c38;
+    --accent: #ff4d5e; --accent-ink: #1a0004; --ok: #6cc690; --bad: #ff7b72;
+    --b-kg: #4d6338;   --b-kg-ink: #eef6e4;
+    --b-prim: #3f6a2c; --b-prim-ink: #eef6e4;
+    --b-sa: #3b5378;   --b-sa-ink: #e8eef8;
+    --b-sb: #4a6289;   --b-sb-ink: #e8eef8;
+    --b-sc: #5c7398;   --b-sc-ink: #e8eef8;
+    --b-gym: #b0122b;  --b-gym-ink: #ffffff;
+    --b-fms: #7f2a33;  --b-fms-ink: #ffe8ea;
+    --b-efz: #a8701c;  --b-efz2: #7d5620; --b-efz-ink: #fff3df;
+    --b-bm: #8a6a2a;   --b-bm-ink: #fff3df;
+    --b-eba: #6b5733;  --b-eba-ink: #fff3df;
+    --b-uni: #3b6b80;  --b-uni-ink: #ffffff;
+    --b-fh: #2f5462;   --b-fh-ink: #ffffff;
+    --b-hbb: #6e4a16;  --b-hbb-ink: #ffffff;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141816; --surface: #1d2320; --ink: #e9ece8; --muted: #a3aba6; --line: #343c38;
+  --accent: #ff4d5e; --accent-ink: #1a0004; --ok: #6cc690; --bad: #ff7b72;
+  --b-kg: #4d6338;   --b-kg-ink: #eef6e4;
+  --b-prim: #3f6a2c; --b-prim-ink: #eef6e4;
+  --b-sa: #3b5378;   --b-sa-ink: #e8eef8;
+  --b-sb: #4a6289;   --b-sb-ink: #e8eef8;
+  --b-sc: #5c7398;   --b-sc-ink: #e8eef8;
+  --b-gym: #b0122b;  --b-gym-ink: #ffffff;
+  --b-fms: #7f2a33;  --b-fms-ink: #ffe8ea;
+  --b-efz: #a8701c;  --b-efz2: #7d5620; --b-efz-ink: #fff3df;
+  --b-bm: #8a6a2a;   --b-bm-ink: #fff3df;
+  --b-eba: #6b5733;  --b-eba-ink: #fff3df;
+  --b-uni: #3b6b80;  --b-uni-ink: #ffffff;
+  --b-fh: #2f5462;   --b-fh-ink: #ffffff;
+  --b-hbb: #6e4a16;  --b-hbb-ink: #ffffff;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 17px; line-height: 1.55;
+}
+.wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+  display: flex; flex-direction: column; gap: 56px;
+}
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.1; }
+h1 { font-size: clamp(2.1rem, 5.4vw, 3.6rem); font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 1.2rem; font-weight: 600; }
+p { margin: 0; max-width: 68ch; }
+a { color: var(--accent); }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.eyebrow { font-family: var(--f-display); font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+section { display: flex; flex-direction: column; gap: 18px; scroll-margin-top: 16px; }
+.lead { color: var(--muted); font-size: 1.05rem; }
+
+/* Header */
+header { display: flex; flex-direction: column; gap: 18px; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.flag { width: 40px; height: 40px; background: var(--accent); position: relative; flex: none; border-radius: 4px; }
+.flag::before, .flag::after { content: ""; position: absolute; background: var(--accent-ink); left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.flag::before { width: 24px; height: 7.5px; }
+.flag::after { width: 7.5px; height: 24px; }
+.brand { display: flex; align-items: center; gap: 12px; }
+nav { display: flex; gap: 6px; flex-wrap: wrap; }
+nav a { text-decoration: none; color: var(--ink); font-size: .92rem; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+nav a:hover { border-color: var(--accent); color: var(--accent); }
+.facts { display: flex; flex-wrap: wrap; gap: 10px 28px; padding-top: 6px; border-top: 1px solid var(--line); }
+.facts div { display: flex; align-items: baseline; gap: 8px; padding-top: 10px; }
+.facts b { font-family: var(--f-display); font-size: 1.7rem; color: var(--accent); font-variant-numeric: tabular-nums; }
+.facts span { color: var(--muted); font-size: .95rem; }
+
+/* Diagram */
+.dia-scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+.dia {
+  display: grid; min-width: 880px;
+  grid-template-columns: repeat(18, minmax(44px, 1fr));
+  grid-template-rows: auto auto auto repeat(5, 62px);
+  gap: 4px;
+}
+.hd { font-size: .8rem; color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; align-self: end; }
+.hd.age { font-weight: 700; color: var(--ink); }
+.hd.h { font-size: .72rem; }
+.hd.start { color: var(--accent); }
+.band { font-family: var(--f-display); font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; text-align: center; padding: 5px 4px; border-top: 2px solid var(--ink); margin-bottom: 4px; }
+.band.ter { border-color: var(--b-uni); }
+.blk {
+  border: 0; border-radius: 6px; cursor: pointer; text-align: left;
+  padding: 6px 9px; display: flex; flex-direction: column; justify-content: center; gap: 1px;
+  position: relative; min-width: 0; overflow: hidden;
+  transition: opacity .25s, transform .15s, box-shadow .15s;
+}
+.blk:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgb(0 0 0 / .18); }
+.blk .n { font-family: var(--f-display); font-weight: 600; font-size: .9rem; line-height: 1.15; }
+.blk .s { font-size: .74rem; opacity: .85; line-height: 1.2; }
+.blk.sel { box-shadow: 0 0 0 3px var(--ink); }
+.blk.tall { justify-content: flex-start; padding-top: 12px; }
+.dia.pathmode .blk:not(.on) { opacity: .18; }
+.badge { position: absolute; top: 5px; right: 6px; width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: var(--bg); font-size: .75rem; font-weight: 700; display: grid; place-items: center; }
+
+.kg   { background: var(--b-kg);   color: var(--b-kg-ink); }
+.prim { background: var(--b-prim); color: var(--b-prim-ink); }
+.sa   { background: var(--b-sa);   color: var(--b-sa-ink); }
+.sb   { background: var(--b-sb);   color: var(--b-sb-ink); }
+.sc   { background: var(--b-sc);   color: var(--b-sc-ink); }
+.gym  { background: var(--b-gym);  color: var(--b-gym-ink); }
+.lgym { background: repeating-linear-gradient(135deg, var(--b-gym) 0 7px, var(--b-fms) 7px 14px); color: var(--b-gym-ink); }
+.lgym .n, .lgym .s { background: var(--b-gym); padding: 0 4px; border-radius: 3px; width: fit-content; }
+.fms  { background: var(--b-fms);  color: var(--b-fms-ink); }
+.efz  { background: linear-gradient(90deg, var(--b-efz) 75%, var(--b-efz2) 75%); color: var(--b-efz-ink); }
+.bm   { background: var(--b-bm);   color: var(--b-bm-ink); }
+.eba  { background: var(--b-eba);  color: var(--b-eba-ink); }
+.uni  { background: var(--b-uni);  color: var(--b-uni-ink); }
+.fh   { background: var(--b-fh);   color: var(--b-fh-ink); }
+.hbb  { background: var(--b-hbb);  color: var(--b-hbb-ink); }
+
+.hint { font-size: .9rem; color: var(--muted); }
+
+/* Detail */
+.detail { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 28px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px; }
+.detail > * { min-width: 0; }
+.detail .main { display: flex; flex-direction: column; gap: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: .82rem; border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; background: var(--bg); }
+.chip b { font-weight: 700; }
+.swatch { width: 14px; height: 14px; border-radius: 3px; display: inline-block; vertical-align: -2px; margin-right: 6px; }
+.vocab { display: flex; flex-direction: column; gap: 0; }
+.vocab h3 { margin-bottom: 8px; font-size: 1rem; }
+.vocab dl { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.vocab dt, .vocab dd { margin: 0; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: .93rem; }
+.vocab dt { font-weight: 700; padding-right: 10px; }
+.vocab dd { color: var(--muted); font-style: italic; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: .88rem; color: var(--muted); }
+
+/* Paths */
+.people { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+.person { text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 14px; cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
+.person:hover { border-color: var(--ink); }
+.person[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.person .who { font-family: var(--f-display); font-weight: 700; font-size: 1.1rem; }
+.person .what { font-size: .88rem; color: var(--muted); }
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; counter-reset: st; }
+.steps li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); counter-increment: st; }
+.steps li::before { content: counter(st); width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: var(--bg); font-weight: 700; font-size: .85rem; display: grid; place-items: center; }
+.steps .age { font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pathbox { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 22px; display: flex; flex-direction: column; gap: 10px; }
+.motto { font-family: var(--f-display); font-weight: 700; color: var(--accent); }
+.linkbtn { background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; cursor: pointer; font-size: .92rem; width: fit-content; }
+
+/* Table */
+.tbl-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: .95rem; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+thead th { font-family: var(--f-display); font-size: .95rem; background: var(--bg); }
+thead th.ch { color: var(--accent); }
+tbody th { font-weight: 700; width: 22%; }
+tbody tr:last-child > * { border-bottom: 0; }
+
+/* Quiz */
+.quiz { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.q { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.q .qt { font-weight: 700; }
+.q .opts { display: flex; flex-direction: column; gap: 6px; }
+.q .opts button { text-align: left; border: 1px solid var(--line); background: var(--bg); border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+.q .opts button:hover:not(:disabled) { border-color: var(--ink); }
+.q .opts button:disabled { cursor: default; }
+.q .opts button.right { border-color: var(--ok); color: var(--ok); font-weight: 700; }
+.q .opts button.wrong { border-color: var(--bad); color: var(--bad); text-decoration: line-through; }
+.q .why { font-size: .9rem; color: var(--muted); }
+.scorebar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.score { font-family: var(--f-display); font-weight: 700; font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.btn { border: 1px solid var(--ink); background: var(--ink); color: var(--bg); border-radius: 8px; padding: 8px 16px; cursor: pointer; font-weight: 700; }
+.btn.ghost { background: transparent; color: var(--ink); }
+
+/* Presenter */
+details.notes { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+details.notes > summary { cursor: pointer; padding: 16px 20px; font-family: var(--f-display); font-weight: 600; font-size: 1.05rem; }
+.notes-body { padding: 0 20px 20px; display: flex; flex-direction: column; gap: 18px; }
+.timer { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; position: sticky; top: env(safe-area-inset-top, 0px); background: var(--surface); padding-block: 10px; z-index: 2; border-bottom: 1px solid var(--line); }
+.clock { font-family: var(--f-display); font-size: 2.2rem; font-weight: 700; font-variant-numeric: tabular-nums; min-width: 5ch; }
+.clock.over { color: var(--accent); }
+.prog { flex: 1 1 160px; height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; border: 1px solid var(--line); }
+.prog i { display: block; height: 100%; width: 0; background: var(--accent); }
+.parts { display: flex; flex-direction: column; gap: 10px; }
+.part { border-left: 4px solid var(--line); padding: 6px 0 6px 14px; display: flex; flex-direction: column; gap: 6px; transition: border-color .2s; }
+.part.now { border-color: var(--accent); }
+.part .ph { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.part .tm { font-variant-numeric: tabular-nums; font-size: .85rem; color: var(--muted); }
+.part p { font-size: 1.02rem; }
+.part .show { font-size: .85rem; color: var(--muted); }
+.glossary dl { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); display: grid; gap: 0 24px; margin: 0; }
+.glossary div { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px solid var(--line); padding: 5px 0; font-size: .92rem; }
+.glossary dt { font-weight: 700; } .glossary dd { margin: 0; color: var(--muted); font-style: italic; text-align: right; }
+
+footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--line); padding-top: 16px; }
+
+@media (max-width: 720px) {
+  .detail { grid-template-columns: minmax(0, 1fr); }
+  body { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="top">
+      <div class="brand"><span class="flag" aria-hidden="true"></span><span class="eyebrow">Präsentation · Deutsch B1.1 · Beispiel Kanton Aargau</span></div>
+      <nav aria-label="Abschnitte">
+        <a href="#grafik">Grafik</a><a href="#wege">Wege</a><a href="#vergleich">Vergleich</a><a href="#quiz">Quiz</a><a href="#sprechertext">Sprechertext</a>
+      </nav>
+    </div>
+    <h1>Das Schweizer Schulsystem</h1>
+    <p class="lead">26 Kantone, 26 Schulsysteme, aber ein gemeinsames Prinzip: <strong>Kein Abschluss ohne Anschluss.</strong> Als Beispiel zeige ich den Kanton Aargau. Klick auf die Blöcke in der Grafik, um mehr zu erfahren.</p>
+    <div class="facts">
+      <div><b>26</b><span>Kantone sind für die Schule zuständig</span></div>
+      <div><b>11</b><span>Jahre obligatorische Schule (ab 4 Jahren)</span></div>
+      <div><b>≈ ⅔</b><span>der Jugendlichen machen eine Lehre</span></div>
+    </div>
+  </header>
+
+  <section id="grafik">
+    <span class="eyebrow">1 · Überblick</span>
+    <h2>Vom Kindergarten bis zur Hochschule: der Aargau</h2>
+    <div class="dia-scroll"><div class="dia" id="dia" role="group" aria-label="Schulsystem nach Alter"></div></div>
+    <p class="hint">Alter = typisches Alter am Anfang des Schuljahres. Zweite Zeile = Schuljahr im Aargau (KG = Kindergarten). Die hellere Spitze bei der Lehre EFZ zeigt: Sie dauert 3 oder 4 Jahre.</p>
+    <div class="detail" id="detail" aria-live="polite"></div>
+  </section>
+
+  <section id="wege">
+    <span class="eyebrow">2 · Beispiele</span>
+    <h2>Vier Jugendliche, vier Wege</h2>
+    <p class="lead">Wähle eine Person. Die Grafik oben zeigt dann ihren Weg.</p>
+    <div class="people" id="people"></div>
+    <div class="pathbox" id="pathbox"></div>
+  </section>
+
+  <section id="vergleich">
+    <span class="eyebrow">3 · Vergleich</span>
+    <h2>Deutschland und die Schweiz</h2>
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th scope="col"></th><th scope="col">Deutschland</th><th scope="col" class="ch">Schweiz</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Wer ist zuständig?</th><td>16 Bundesländer</td><td>26 Kantone (viele im HarmoS-Konkordat, der Aargau nicht)</td></tr>
+          <tr><th scope="row">Schulpflicht beginnt</th><td>mit 6 Jahren</td><td>mit 4 Jahren (Kindergarten, in den meisten Kantonen)</td></tr>
+          <tr><th scope="row">Grund-/Primarschule</th><td>4 Jahre (in Berlin und Brandenburg 6)</td><td>6 Jahre</td></tr>
+          <tr><th scope="row">Trennung nach Leistung</th><td>nach der 4. Klasse</td><td>nach der 6. Klasse (8H)</td></tr>
+          <tr><th scope="row">Sekundarstufe I</th><td>Gymnasium, Realschule, Hauptschule, Gesamtschule</td><td>Im Aargau: Realschule, Sekundarschule, Bezirksschule (3 Jahre). Andere Kantone: Niveaus A, B, C, teilweise Langzeitgymnasium</td></tr>
+          <tr><th scope="row">Abschluss für die Uni</th><td>Abitur</td><td>Matura (gymnasiale Maturität)</td></tr>
+          <tr><th scope="row">Häufigster Weg nach der Schule</th><td>Duale Ausbildung ist wichtig, aber viele machen Abitur und studieren</td><td>Lehre: rund zwei Drittel der Jugendlichen</td></tr>
+          <tr><th scope="row">Rechtschreibung</th><td>Straße, heißen</td><td>Strasse, heissen (kein ß)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <span class="eyebrow">4 · Mitmachen</span>
+    <h2>Quiz für die Klasse</h2>
+    <div class="scorebar"><span class="score" id="score">0 / 7</span><button class="btn ghost" id="qreset" type="button">Neu starten</button></div>
+    <div class="quiz" id="qz"></div>
+  </section>
+
+  <section id="sprechertext">
+    <span class="eyebrow">5 · Für mich</span>
+    <h2>Sprechertext (5 Minuten)</h2>
+    <details class="notes" id="notes">
+      <summary>Sprechertext und Timer öffnen</summary>
+      <div class="notes-body">
+        <div class="timer">
+          <span class="clock" id="clock">0:00</span>
+          <div class="prog" aria-hidden="true"><i id="progbar"></i></div>
+          <button class="btn" id="tstart" type="button">Start</button>
+          <button class="btn ghost" id="treset" type="button">Zurück</button>
+        </div>
+        <div class="parts" id="parts"></div>
+        <div class="glossary">
+          <h3>Wichtige Wörter (Deutsch → Español)</h3>
+          <dl id="gloss"></dl>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <footer>
+    <span>Zahlen gerundet; die Details sind in jedem Kanton etwas anders. Quellen: <a href="https://www.edk.ch" target="_blank" rel="noopener">EDK</a>, <a href="https://www.sbfi.admin.ch" target="_blank" rel="noopener">SBFI</a>, <a href="https://www.berufsberatung.ch" target="_blank" rel="noopener">berufsberatung.ch</a>, <a href="https://www.bfs.admin.ch" target="_blank" rel="noopener">BFS</a>.</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  // Blocks: age = start age (column), span = years, row 1–5, rows = height
+  var B = {
+    kg:   { cls: "kg",   n: "Kindergarten", s: "2 Jahre · obligatorisch", age: 4, span: 2, row: 1, rows: 5,
+      alter: "4–6", dauer: "2 Jahre", abschluss: "–",
+      t: "Im Aargau ist der Kindergarten obligatorisch und dauert zwei Jahre. Die Kinder beginnen mit etwa vier Jahren. Dort lernen sie spielen, sprechen und mit anderen Kindern zusammenarbeiten. Noten gibt es noch keine.",
+      v: [["die Schulpflicht", "escolaridad obligatoria"], ["obligatorisch", "obligatorio"], ["zusammenarbeiten", "colaborar"]] },
+    prim: { cls: "prim", n: "Primarschule", s: "6 Jahre · 1.–6. Klasse", age: 6, span: 6, row: 1, rows: 5,
+      alter: "6–12", dauer: "6 Jahre", abschluss: "Übertritt in die Oberstufe",
+      t: "Die Primarschule dauert sechs Jahre. Früher waren es im Aargau nur fünf Jahre, aber seit 2014 sind es sechs, wie in den meisten Kantonen. Alle Kinder lernen zusammen in einer Klasse. Ab der 3. Klasse lernen sie Englisch, später auch Französisch. In der 6. Klasse entscheiden Eltern, Lehrperson und Kind zusammen, in welchen Schultyp das Kind in der Oberstufe kommt.",
+      v: [["die Fremdsprache", "lengua extranjera"], ["das Zeugnis", "boletín de notas"], ["der Übertritt", "paso / transición"]] },
+    sa:   { cls: "sa", n: "Bezirksschule", s: "höchste Anforderungen · 7.–9.", age: 12, span: 3, row: 1, rows: 2, sek: "Die Bezirksschule («Bez») hat die höchsten Anforderungen. Sie ist typisch für den Aargau. Nach der Bez gehen viele an die Kantonsschule (Gymnasium oder FMS) oder machen eine anspruchsvolle Lehre mit Berufsmaturität." },
+    sb:   { cls: "sb", n: "Sekundarschule", s: "mittlere Anforderungen", age: 12, span: 3, row: 3, rows: 2, sek: "Die Sekundarschule («Sek») hat mittlere Anforderungen. Die meisten Jugendlichen machen danach eine Lehre mit EFZ." },
+    sc:   { cls: "sc", n: "Realschule", s: "Grundanforderungen", age: 12, span: 3, row: 5, rows: 1, sek: "Die Realschule hat Grundanforderungen. Die Klassen sind kleiner. Danach macht man oft eine praktische Lehre mit EBA oder EFZ." },
+    gym:  { cls: "gym", n: "Kantonsschule: Gymnasium", s: "4 Jahre · Matura", age: 15, span: 4, row: 1, rows: 1,
+      alter: "15–19", dauer: "4 Jahre", abschluss: "gymnasiale Maturität («Matura»)",
+      t: "Im Aargau gibt es kein Langzeitgymnasium. Man geht zuerst drei Jahre in die Bezirksschule und danach vier Jahre an eine Kantonsschule, zum Beispiel in Aarau, Baden, Wettingen, Wohlen oder Zofingen. Am Ende macht man die Matura. Mit der Matura kann man an jeder Schweizer Universität und an der ETH studieren, meistens ohne Aufnahmeprüfung (Ausnahme: Medizin).",
+      v: [["die Matura", "título de bachillerato"], ["die Kantonsschule", "instituto cantonal (bachillerato)"], ["vorbereiten auf", "preparar para"]] },
+    fms:  { cls: "fms", n: "Fachmittelschule (FMS)", s: "3 Jahre · Kantonsschule", age: 15, span: 3, row: 2, rows: 1,
+      alter: "15–18", dauer: "3 Jahre (+ 1 Jahr Fachmaturität)", abschluss: "Fachmittelschulausweis, Fachmaturität",
+      t: "Die FMS ist im Aargau auch an den Kantonsschulen. Sie ist für Jugendliche, die später zum Beispiel im Gesundheitsbereich, im Sozialbereich oder als Lehrperson arbeiten möchten. Mit der Fachmaturität kann man an eine Fachhochschule oder an die Pädagogische Hochschule gehen.",
+      v: [["der Gesundheitsbereich", "sector sanitario"], ["die Lehrperson", "docente"]] },
+    bm:   { cls: "bm", n: "Berufsmaturität (BM)", s: "während oder nach der Lehre", age: 15, span: 4, row: 3, rows: 1,
+      alter: "15–19 oder nach der Lehre", dauer: "parallel zur Lehre (BM 1) oder 1 Jahr nach der Lehre (BM 2)", abschluss: "Berufsmaturitätszeugnis",
+      t: "Wer eine Lehre mit EFZ macht, kann zusätzlich die Berufsmaturität machen. Die Lernenden haben dann mehr Schultage. Mit der BM kann man ohne Prüfung an einer Fachhochschule studieren, zum Beispiel an der FHNW in Brugg-Windisch. Mit einer Zusatzprüfung, der «Passerelle», kann man sogar an die Universität.",
+      v: [["zusätzlich", "adicionalmente"], ["die Zusatzprüfung", "examen complementario"], ["die Fachhochschule", "universidad de ciencias aplicadas"]] },
+    efz:  { cls: "efz", n: "Lehre mit EFZ", s: "3–4 Jahre · Betrieb + Schule", age: 15, span: 4, row: 4, rows: 1,
+      alter: "15–19", dauer: "3 oder 4 Jahre", abschluss: "Eidgenössisches Fähigkeitszeugnis (EFZ)",
+      t: "Rund zwei Drittel der Jugendlichen in der Schweiz machen nach der obligatorischen Schule eine Lehre. Das System ist dual: Die Lernenden arbeiten drei bis vier Tage pro Woche in einem Betrieb und gehen ein bis zwei Tage in die Berufsfachschule. Sie bekommen einen Lohn. Es gibt rund 250 Lehrberufe, zum Beispiel Kaufmann/Kauffrau, Informatiker/in oder Polymechaniker/in. Im Aargau gibt es viele Industriebetriebe mit Lehrstellen.",
+      v: [["die Lehre", "formación profesional (aprendizaje)"], ["der/die Lernende", "aprendiz"], ["der Betrieb", "empresa"], ["die Lehrstelle", "plaza de aprendiz"]] },
+    eba:  { cls: "eba", n: "Lehre mit EBA", s: "2 Jahre", age: 15, span: 2, row: 5, rows: 1,
+      alter: "15–17", dauer: "2 Jahre", abschluss: "Eidgenössisches Berufsattest (EBA)",
+      t: "Die zweijährige Lehre mit Berufsattest ist für Jugendliche, die lieber praktisch lernen. Sie ist einfacher als die Lehre mit EFZ. Danach kann man oft direkt ins zweite Jahr einer EFZ-Lehre einsteigen.",
+      v: [["praktisch", "práctico"], ["einsteigen", "incorporarse"]] },
+    uni:  { cls: "uni", n: "Universität / ETH", s: "Zürich, Basel, Bern …", age: 19, span: 3, row: 1, rows: 1,
+      alter: "ab ca. 19", dauer: "Bachelor 3 Jahre, Master 1,5–2 Jahre", abschluss: "Bachelor, Master, Doktorat",
+      t: "Der Aargau hat keine eigene Universität. Die Studierenden gehen meistens nach Zürich, Basel oder Bern. In Zürich ist auch die ETH, eine der besten technischen Hochschulen der Welt. Das Studium ist in Bachelor und Master aufgeteilt. Die Studiengebühren sind im internationalen Vergleich niedrig.",
+      v: [["das Studium", "estudios universitarios"], ["die Studiengebühren", "tasas de matrícula"], ["pendeln", "desplazarse a diario"]] },
+    fh:   { cls: "fh", n: "FHNW / PH FHNW", s: "Campus Brugg-Windisch", age: 19, span: 3, row: 2, rows: 2,
+      alter: "ab ca. 19", dauer: "Bachelor 3 Jahre, Master 1,5–2 Jahre", abschluss: "Bachelor, Master",
+      t: "Die Fachhochschule Nordwestschweiz (FHNW) hat einen grossen Campus in Brugg-Windisch im Aargau. Fachhochschulen sind praxisorientiert: Man studiert zum Beispiel Technik, Wirtschaft oder Soziale Arbeit. Viele Studierende haben vorher eine Lehre mit Berufsmaturität gemacht. An der Pädagogischen Hochschule (PH FHNW) werden Lehrpersonen ausgebildet.",
+      v: [["praxisorientiert", "orientado a la práctica"], ["ausbilden", "formar"]] },
+    hbb:  { cls: "hbb", n: "Höhere Berufsbildung", s: "HF · Berufsprüfung", age: 19, span: 3, row: 4, rows: 2,
+      alter: "nach Lehre + Berufserfahrung", dauer: "berufsbegleitend, meist 2–3 Jahre", abschluss: "dipl. HF, eidg. Fachausweis, eidg. Diplom",
+      t: "Nach einer Lehre und einigen Jahren Berufserfahrung kann man sich weiterbilden: an einer Höheren Fachschule (HF) oder mit einer eidgenössischen Berufsprüfung oder höheren Fachprüfung, zum Beispiel als Meister. Diese Abschlüsse sind auf dem Arbeitsmarkt sehr geschätzt.",
+      v: [["die Weiterbildung", "formación continua"], ["die Berufserfahrung", "experiencia profesional"], ["geschätzt", "valorado"]] }
+  };
+  var SEK = {
+    alter: "12–15", dauer: "3 Jahre", abschluss: "Ende der obligatorischen Schule (9. Klasse)",
+    t: "Nach der Primarschule kommen die Jugendlichen in die Oberstufe (Sekundarstufe I). Sie dauert drei Jahre. Im Aargau gibt es drei Schultypen: Realschule, Sekundarschule und Bezirksschule. Die Schüler werden nach ihren Leistungen eingeteilt. Ein Wechsel zwischen den Schultypen ist möglich.",
+    v: [["die Leistung", "rendimiento"], ["das Niveau", "nivel"], ["einteilen", "asignar / clasificar"], ["die Oberstufe", "secundaria (7.º–9.º)"]]
+  };
+  ["sa", "sb", "sc"].forEach(function (k) {
+    var b = B[k]; b.alter = SEK.alter; b.dauer = SEK.dauer; b.abschluss = SEK.abschluss; b.t = SEK.t + " " + b.sek; b.v = SEK.v;
+  });
+
+  var PATHS = {
+    lena: { who: "Lena", what: "Lehre und Weiterbildung", ids: ["kg", "prim", "sb", "efz", "hbb"],
+      steps: [["4–12", "Kindergarten und Primarschule in Aarau."], ["12–15", "Sie geht in die Sekundarschule."], ["15–18", "Lehre als Kauffrau EFZ bei einer Versicherung. Sie verdient schon Geld."], ["ab 22", "Nach drei Jahren Berufserfahrung besucht sie die Höhere Fachschule (HF) für Wirtschaft."]] },
+    marco: { who: "Marco", what: "Kantonsschule und ETH", ids: ["kg", "prim", "sa", "gym", "uni"],
+      steps: [["4–12", "Kindergarten und Primarschule in Baden."], ["12–15", "Er geht in die Bezirksschule."], ["15–19", "Gymnasium an der Kantonsschule Baden. Mit 19 macht er die Matura."], ["ab 19", "Er pendelt nach Zürich und studiert Informatik an der ETH."]] },
+    sara: { who: "Sara", what: "Lehre mit BM und FHNW", ids: ["kg", "prim", "sa", "efz", "bm", "fh"],
+      steps: [["4–12", "Kindergarten und Primarschule in Brugg."], ["12–15", "Sie geht in die Bezirksschule."], ["15–19", "Lehre als Informatikerin EFZ und gleichzeitig die Berufsmaturität."], ["ab 19", "Studium an der FHNW in Brugg-Windisch. Mit der Passerelle könnte sie auch an die Universität."]] },
+    jonas: { who: "Jonas", what: "Schritt für Schritt", ids: ["kg", "prim", "sc", "eba", "efz"],
+      steps: [["4–12", "In der Schule in Wohlen hat Jonas oft Mühe."], ["12–15", "Er geht in die Realschule."], ["15–17", "Er macht zuerst eine zweijährige Lehre mit EBA als Logistiker."], ["17–19", "Danach steigt er ins zweite Jahr der Lehre mit EFZ ein. Kein Abschluss ohne Anschluss!"]] }
+  };
+
+  var dia = document.getElementById("dia");
+  var detail = document.getElementById("detail");
+  var buttons = {};
+  var selected = null, activePath = null;
+
+  function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+  function place(e, c1, span, r1, rows) { e.style.gridColumn = c1 + " / span " + span; e.style.gridRow = r1 + " / span " + rows; }
+
+  // Header rows: age, HarmoS, Stufen
+  for (var a = 4; a <= 21; a++) {
+    var h = el("div", "hd age" + (a === 4 ? " start" : ""), a === 21 ? "21+" : String(a));
+    place(h, a - 3, 1, 1, 1); dia.appendChild(h);
+    if (a <= 14) { var hh = el("div", "hd h", a < 6 ? "KG " + (a - 3) : (a - 5) + "."); place(hh, a - 3, 1, 2, 1); dia.appendChild(hh); }
+  }
+  [["Obligatorische Schule", 1, 11, ""], ["Sekundarstufe II", 12, 4, ""], ["Tertiärstufe", 16, 3, " ter"]].forEach(function (x) {
+    var b = el("div", "band" + x[3], x[0]); place(b, x[1], x[2], 3, 1); dia.appendChild(b);
+  });
+
+  Object.keys(B).forEach(function (k) {
+    var b = B[k];
+    var btn = el("button", "blk " + b.cls + (b.rows > 2 ? " tall" : ""));
+    btn.type = "button";
+    btn.innerHTML = '<span class="n">' + b.n + '</span><span class="s">' + b.s + "</span>";
+    btn.setAttribute("aria-label", b.n + ", Alter " + b.alter);
+    place(btn, b.age - 3, b.span, b.row + 3, b.rows);
+    btn.addEventListener("click", function () { show(k); });
+    dia.appendChild(btn); buttons[k] = btn;
+  });
+
+  function overview() {
+    detail.innerHTML =
+      '<div class="main"><span class="eyebrow">So liest du die Grafik</span><h3>Von links nach rechts: das Alter</h3>' +
+      "<p>Die ersten 11 Jahre sind für alle obligatorisch. Mit etwa 15 Jahren wählen die Jugendlichen einen Weg: eine Lehre (berufliche Grundbildung) oder eine Mittelschule (Gymnasium, FMS). Danach gibt es viele Möglichkeiten zum Weiterlernen.</p>" +
+      '<p><button class="linkbtn" type="button" data-k="efz">Mit der Lehre beginnen →</button></p></div>' +
+      '<div class="vocab"><h3>Farben</h3><div class="legend" style="flex-direction:column">' +
+      legend("var(--b-prim)", "Obligatorische Schule") + legend("var(--b-sa)", "Oberstufe: Bez, Sek, Real") +
+      legend("var(--b-gym)", "Allgemeinbildende Schulen") + legend("var(--b-efz)", "Berufliche Grundbildung (Lehre)") +
+      legend("var(--b-uni)", "Hochschulen und Höhere Berufsbildung") + "</div></div>";
+    var lb = detail.querySelector(".linkbtn"); lb.addEventListener("click", function () { show("efz"); });
+  }
+  function legend(c, t) { return '<span><span class="swatch" style="background:' + c + '"></span>' + t + "</span>"; }
+
+  function show(k) {
+    var b = B[k];
+    if (selected) buttons[selected].classList.remove("sel");
+    selected = k; buttons[k].classList.add("sel");
+    var vocab = b.v.map(function (p) { return "<dt>" + p[0] + "</dt><dd>" + p[1] + "</dd>"; }).join("");
+    detail.innerHTML =
+      '<div class="main"><span class="eyebrow">' + legendName(b.cls) + "</span><h3>" + b.n + "</h3>" +
+      '<div class="chips"><span class="chip">Alter: <b>' + b.alter + '</b></span><span class="chip">Dauer: <b>' + b.dauer + '</b></span><span class="chip">Abschluss: <b>' + b.abschluss + "</b></span></div>" +
+      "<p>" + b.t + '</p><p><button class="linkbtn" type="button">Übersicht zeigen</button></p></div>' +
+      '<div class="vocab"><h3>Wortschatz</h3><dl>' + vocab + "</dl></div>";
+    detail.querySelector(".linkbtn").addEventListener("click", function () { buttons[k].classList.remove("sel"); selected = null; overview(); });
+  }
+  function legendName(c) {
+    return { kg: "Obligatorische Schule", prim: "Obligatorische Schule", sa: "Oberstufe (Sek I)", sb: "Oberstufe (Sek I)", sc: "Oberstufe (Sek I)",
+      gym: "Sekundarstufe II · allgemeinbildend", fms: "Sekundarstufe II · allgemeinbildend",
+      efz: "Sekundarstufe II · Berufsbildung", bm: "Sekundarstufe II · Berufsbildung", eba: "Sekundarstufe II · Berufsbildung",
+      uni: "Tertiärstufe", fh: "Tertiärstufe", hbb: "Tertiärstufe · Berufsbildung" }[c];
+  }
+
+  // Paths
+  var people = document.getElementById("people"), pathbox = document.getElementById("pathbox");
+  var pBtns = {};
+  Object.keys(PATHS).forEach(function (k) {
+    var p = PATHS[k];
+    var btn = el("button", "person", '<span class="who">' + p.who + '</span><span class="what">' + p.what + "</span>");
+    btn.type = "button"; btn.setAttribute("aria-pressed", "false");
+    btn.addEventListener("click", function () { setPath(activePath === k ? null : k); });
+    people.appendChild(btn); pBtns[k] = btn;
+  });
+  function clearBadges() { dia.querySelectorAll(".badge").forEach(function (b) { b.remove(); }); Object.keys(buttons).forEach(function (k) { buttons[k].classList.remove("on"); }); }
+  function setPath(k) {
+    activePath = k; clearBadges();
+    Object.keys(pBtns).forEach(function (x) { pBtns[x].setAttribute("aria-pressed", String(x === k)); });
+    if (!k) {
+      dia.classList.remove("pathmode");
+      pathbox.innerHTML = '<p class="motto">Kein Abschluss ohne Anschluss.</p><p>Das heisst: Kein Weg ist eine Sackgasse. Nach jedem Abschluss kann man weiterlernen. Wähle oben eine Person, um ein Beispiel zu sehen.</p>';
+      return;
+    }
+    var p = PATHS[k];
+    dia.classList.add("pathmode");
+    p.ids.forEach(function (id, i) { var b = buttons[id]; b.classList.add("on"); var s = el("span", "badge", String(i + 1)); s.setAttribute("aria-hidden", "true"); b.appendChild(s); });
+    pathbox.innerHTML = "<h3>Der Weg von " + p.who + '</h3><ol class="steps">' +
+      p.steps.map(function (s) { return '<li><div><div class="age">Alter ' + s[0] + "</div>" + s[1] + "</div></li>"; }).join("") +
+      '</ol><button class="linkbtn" type="button">Grafik oben ansehen ↑</button>';
+    pathbox.querySelector(".linkbtn").addEventListener("click", function () { document.getElementById("grafik").scrollIntoView({ behavior: "smooth" }); });
+  }
+
+  // Quiz
+  var Q = [
+    ["Wie lange dauert die Primarschule in der Schweiz?", ["4 Jahre", "6 Jahre", "8 Jahre"], 1, "Sechs Jahre, also zwei Jahre länger als die Grundschule in den meisten Bundesländern."],
+    ["Was machen die meisten Jugendlichen nach der obligatorischen Schule?", ["Sie gehen ans Gymnasium.", "Sie machen eine Lehre.", "Sie arbeiten ohne Ausbildung."], 1, "Rund zwei Drittel machen eine Lehre."],
+    ["Wie heisst der Abschluss am Gymnasium in der Schweiz?", ["Abitur", "Matura", "Bachelor"], 1, "In der Schweiz sagt man Matura (gymnasiale Maturität)."],
+    ["Wie viele Kantone haben ihr eigenes Schulsystem?", ["4", "16", "26"], 2, "26 Kantone. HarmoS macht die Systeme ähnlicher."],
+    ["Wie heisst im Aargau der Schultyp mit den höchsten Anforderungen in der Oberstufe?", ["Realschule", "Sekundarschule", "Bezirksschule"], 2, "Die Bezirksschule, kurz «Bez»."],
+    ["Mit welchem Abschluss kann man ohne Prüfung an eine Fachhochschule wie die FHNW?", ["Berufsmaturität", "EBA", "Abschluss der Primarschule"], 0, "Mit der Berufsmaturität (BM)."],
+    ["Was bedeutet «dual» bei der Lehre?", ["nur Schule", "Betrieb und Berufsfachschule", "zwei Sprachen lernen"], 1, "Man lernt im Betrieb und in der Berufsfachschule."]
+  ];
+  var qz = document.getElementById("qz"), scoreEl = document.getElementById("score"), score = 0;
+  function renderQuiz() {
+    score = 0; scoreEl.textContent = "0 / " + Q.length; qz.innerHTML = "";
+    Q.forEach(function (q, i) {
+      var box = el("div", "q");
+      box.appendChild(el("div", "qt", (i + 1) + ". " + q[0]));
+      var opts = el("div", "opts"), why = el("div", "why");
+      why.hidden = true;
+      q[1].forEach(function (o, j) {
+        var b = el("button", "", o); b.type = "button";
+        b.addEventListener("click", function () {
+          opts.querySelectorAll("button").forEach(function (x, xi) { x.disabled = true; if (xi === q[2]) x.classList.add("right"); });
+          if (j === q[2]) { score++; scoreEl.textContent = score + " / " + Q.length; why.textContent = "Richtig! " + q[3]; }
+          else { b.classList.add("wrong"); why.textContent = "Leider falsch. " + q[3]; }
+          why.hidden = false;
+        });
+        opts.appendChild(b);
+      });
+      box.appendChild(opts); box.appendChild(why); qz.appendChild(box);
+    });
+  }
+  document.getElementById("qreset").addEventListener("click", renderQuiz);
+
+  // Speaker script: [start sec, end sec, title, text, what to show]
+  var PARTS = [
+    [0, 40, "Einleitung", "Guten Tag zusammen! Im Kurs haben wir das deutsche Schulsystem gesehen. Heute möchte ich euch das Schweizer Schulsystem vorstellen, und zwar am Beispiel vom Kanton Aargau. Ich spreche über vier Punkte: die obligatorische Schule, die Sekundarstufe II, die Hochschulen und zum Schluss einen kurzen Vergleich mit Deutschland. Am Ende gibt es ein kleines Quiz für euch.", "Zeigen: Titel und die drei Zahlen oben."],
+    [40, 100, "Kantone und obligatorische Schule", "Zuerst etwas Wichtiges: In der Schweiz ist die Schule Sache der Kantone. Es gibt 26 Kantone, also eigentlich 26 Schulsysteme! Viele Kantone haben das HarmoS-Konkordat unterschrieben, der Aargau nicht. Trotzdem ist das System ähnlich. Im Aargau dauert die obligatorische Schule elf Jahre. Sie beginnt mit vier Jahren, mit zwei Jahren Kindergarten. Danach kommt die Primarschule. Sie dauert sechs Jahre, also zwei Jahre länger als die Grundschule in Deutschland. Ab der dritten Klasse lernen die Kinder Englisch, später auch Französisch.", "Klicken: Kindergarten, dann Primarschule."],
+    [100, 150, "Oberstufe: Real, Sek und Bez", "Mit ungefähr zwölf Jahren kommen die Kinder in die Oberstufe. Sie dauert drei Jahre. Im Aargau gibt es drei Schultypen: die Realschule, die Sekundarschule und die Bezirksschule. Die Bezirksschule hat die höchsten Anforderungen. Man kann aber auch wechseln. Anders als in Zürich gibt es im Aargau kein Langzeitgymnasium. Alle gehen zuerst in die Oberstufe.", "Klicken: Bezirksschule, dann Realschule."],
+    [150, 225, "Sekundarstufe II: Lehre oder Kantonsschule", "Nach der obligatorischen Schule, mit etwa fünfzehn Jahren, gibt es zwei grosse Wege. Der erste und häufigste Weg ist die Lehre. In der Schweiz machen rund zwei Drittel der Jugendlichen eine Lehre. Das System ist dual: Die Lernenden arbeiten drei bis vier Tage in einem Betrieb und gehen ein bis zwei Tage in die Berufsfachschule. Sie verdienen schon Geld. Der zweite Weg ist die Kantonsschule, zum Beispiel in Aarau oder Baden. Dort macht man nach vier Jahren die Matura, das ist wie das Abitur in Deutschland. In der Schweiz hat die Lehre einen sehr guten Ruf. Sie ist keine schlechtere Wahl.", "Klicken: Lehre mit EFZ, dann Kantonsschule."],
+    [225, 270, "Hochschulen: Kein Abschluss ohne Anschluss", "Der Aargau hat keine eigene Universität. Nach der Matura gehen viele nach Zürich, zum Beispiel an die ETH, oder nach Basel. Mit einer Lehre und der Berufsmaturität kann man an der Fachhochschule studieren, zum Beispiel an der FHNW in Brugg-Windisch. Das Motto ist: Kein Abschluss ohne Anschluss. Das bedeutet: Kein Weg ist eine Sackgasse. Man kann immer weiterlernen.", "Zeigen: Weg von Sara (Abschnitt «Wege»)."],
+    [270, 300, "Vergleich und Schluss", "Zum Schluss ein kurzer Vergleich: In Deutschland trennt man die Kinder nach vier Jahren, in der Schweiz nach sechs Jahren. In Deutschland heisst der Abschluss Abitur, in der Schweiz Matura. Und in der Schweiz machen viel mehr Jugendliche eine Lehre. Vielen Dank für eure Aufmerksamkeit! Jetzt das Quiz: Wer weiss die Antworten?", "Zeigen: Vergleichstabelle, dann Quiz."]
+  ];
+  var partsEl = document.getElementById("parts"), partEls = [];
+  function mmss(s) { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); }
+  PARTS.forEach(function (p) {
+    var d = el("div", "part");
+    d.innerHTML = '<div class="ph"><h3>' + p[2] + '</h3><span class="tm">' + mmss(p[0]) + "–" + mmss(p[1]) + "</span></div><p>" + p[3] + '</p><span class="show">' + p[4] + "</span>";
+    partsEl.appendChild(d); partEls.push(d);
+  });
+  var GLOSS = [["die Schulpflicht", "escolaridad obligatoria"], ["die Lehre", "formación profesional"], ["der Betrieb", "empresa"], ["die Leistung", "rendimiento"], ["einteilen", "clasificar"], ["die Matura", "bachillerato"], ["die Fachhochschule", "univ. de ciencias aplicadas"], ["die Sackgasse", "callejón sin salida"], ["der Ruf", "reputación"], ["die Wahl", "elección"], ["der Anschluss", "continuación / conexión"], ["zuständig sein für", "ser responsable de"], ["die Bezirksschule", "secundaria de nivel alto (AG)"], ["pendeln", "desplazarse a diario"]];
+  document.getElementById("gloss").innerHTML = GLOSS.map(function (g) { return "<div><dt>" + g[0] + "</dt><dd>" + g[1] + "</dd></div>"; }).join("");
+
+  var clock = document.getElementById("clock"), bar = document.getElementById("progbar"), tstart = document.getElementById("tstart");
+  var running = false, base = 0, startedAt = 0, tick = null;
+  function elapsed() { return base + (running ? (Date.now() - startedAt) / 1000 : 0); }
+  function draw() {
+    var e = elapsed();
+    clock.textContent = mmss(e); clock.classList.toggle("over", e >= 300);
+    bar.style.width = Math.min(100, e / 3) + "%";
+    partEls.forEach(function (d, i) { d.classList.toggle("now", (running || e > 0) && e >= PARTS[i][0] && (e < PARTS[i][1] || (i === PARTS.length - 1 && e >= 300))); });
+  }
+  tstart.addEventListener("click", function () {
+    if (running) { base = elapsed(); running = false; clearInterval(tick); tstart.textContent = "Weiter"; }
+    else { startedAt = Date.now(); running = true; tick = setInterval(draw, 250); tstart.textContent = "Pause"; }
+    draw();
+  });
+  document.getElementById("treset").addEventListener("click", function () { running = false; clearInterval(tick); base = 0; tstart.textContent = "Start"; draw(); });
+
+  overview(); setPath(null); renderQuiz(); draw();
+})();
+</script>
+</body>
+</html>
