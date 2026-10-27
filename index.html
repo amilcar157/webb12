@@ -304,11 +304,11 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
       </nav>
     </div>
     <h1>Das Schweizer Schulsystem</h1>
-    <p class="lead">26 Kantone, 26 Schulsysteme, aber ein gemeinsames Prinzip: <strong>Kein Abschluss ohne Anschluss.</strong> Als Beispiel zeige ich den Kanton Aargau. Klick auf die Blöcke in der Grafik, um mehr zu erfahren.</p>
+    <p class="lead">In der Schweiz hat jeder Kanton sein eigenes Schulsystem. Ich zeige euch das Beispiel Aargau. Die wichtigste Idee: <strong>Kein Abschluss ohne Anschluss.</strong> Das heisst: Man kann immer weiterlernen.</p>
     <div class="facts">
-      <div><b>26</b><span>Kantone sind für die Schule zuständig</span></div>
-      <div><b>11</b><span>Jahre obligatorische Schule (ab 4 Jahren)</span></div>
-      <div><b>≈ ⅔</b><span>der Jugendlichen in der Schweiz machen eine Lehre</span></div>
+      <div><b>26</b><span>Kantone, also 26 Schulsysteme</span></div>
+      <div><b>11</b><span>Jahre Schule für alle (ab 4 Jahren)</span></div>
+      <div><b>≈ ⅔</b><span>2 von 3 Jugendlichen machen eine Lehre</span></div>
     </div>
   </div></header>
 
@@ -318,7 +318,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     <span class="eyebrow">1 · Überblick</span>
     <h2>Vom Kindergarten bis zur Hochschule: der Aargau</h2>
     <div class="dia-scroll"><div class="dia" id="dia" role="group" aria-label="Schulsystem nach Alter"></div></div>
-    <p class="hint">Klick auf einen Block: Die Pfeile zeigen, woher man kommt (gepunktet) und wohin man danach gehen kann. Alter = typisches Alter am Anfang des Schuljahres. Zweite Zeile = Schuljahr im Aargau (KG = Kindergarten). Die hellere Spitze bei der Lehre EFZ zeigt: Sie dauert 3 oder 4 Jahre.</p>
+    <p class="hint">Klick auf einen Block. Die Pfeile zeigen: Woher kommt man (gepunktet)? Wohin geht man danach? Oben stehen das Alter und die Klasse (KG = Kindergarten). Die Lehre mit EFZ dauert 3 oder 4 Jahre (hellere Farbe).</p>
     <div class="detail" id="detail" aria-live="polite"></div>
   </section>
 
@@ -337,13 +337,13 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
       <table>
         <thead><tr><th scope="col"></th><th scope="col">Deutschland</th><th scope="col" class="ch">Schweiz</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Wer ist zuständig?</th><td>16 Bundesländer</td><td>26 Kantone (viele im HarmoS-Konkordat, der Aargau nicht)</td></tr>
-          <tr><th scope="row">Schulpflicht beginnt</th><td>mit 6 Jahren</td><td>mit 4 Jahren (Kindergarten, in den meisten Kantonen)</td></tr>
+          <tr><th scope="row">Wer macht die Regeln?</th><td>16 Bundesländer</td><td>26 Kantone</td></tr>
+          <tr><th scope="row">Schulpflicht beginnt</th><td>mit 6 Jahren</td><td>mit 4 Jahren (Kindergarten)</td></tr>
           <tr><th scope="row">Grund-/Primarschule</th><td>4 Jahre (in Berlin und Brandenburg 6)</td><td>6 Jahre</td></tr>
-          <tr><th scope="row">Trennung nach Leistung</th><td>nach der 4. Klasse</td><td>nach der 6. Klasse</td></tr>
-          <tr><th scope="row">Sekundarstufe I</th><td>Gymnasium, Realschule, Hauptschule, Gesamtschule</td><td>Im Aargau: Realschule, Sekundarschule, Bezirksschule (3 Jahre). Andere Kantone: Niveaus A, B, C, teilweise Langzeitgymnasium</td></tr>
-          <tr><th scope="row">Abschluss für die Uni</th><td>Abitur</td><td>Matura (gymnasiale Maturität)</td></tr>
-          <tr><th scope="row">Häufigster Weg nach der Schule</th><td>Duale Ausbildung ist wichtig, aber viele machen Abitur und studieren</td><td>Lehre: rund zwei Drittel der Jugendlichen</td></tr>
+          <tr><th scope="row">Wann trennt man die Kinder?</th><td>nach der 4. Klasse</td><td>nach der 6. Klasse</td></tr>
+          <tr><th scope="row">Schulen danach</th><td>Gymnasium, Realschule, Hauptschule, Gesamtschule</td><td>Im Aargau: Realschule, Sekundarschule, Bezirksschule</td></tr>
+          <tr><th scope="row">Prüfung für die Uni</th><td>Abitur</td><td>Matura</td></tr>
+          <tr><th scope="row">Was machen die meisten nach der Schule?</th><td>Viele machen eine Ausbildung. Viele machen auch Abitur und studieren.</td><td>Eine Lehre (2 von 3 Jugendlichen)</td></tr>
           <tr><th scope="row">Rechtschreibung</th><td>Straße, heißen</td><td>Strasse, heissen (kein ß)</td></tr>
         </tbody>
       </table>
@@ -386,54 +386,54 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
 (function () {
   // Blocks: age = start age (column), span = years, row 1–5, rows = height
   var B = {
-    kg:   { cls: "kg",   n: "Kindergarten", s: "2 Jahre · obligatorisch", age: 4, span: 2, row: 1, rows: 5,
+    kg:   { cls: "kg",   n: "Kindergarten", s: "2 Jahre · Pflicht", age: 4, span: 2, row: 1, rows: 5,
       alter: "4–6", dauer: "2 Jahre", abschluss: "–",
-      t: "Im Aargau ist der Kindergarten obligatorisch und dauert zwei Jahre. Wer bis zum 31. Juli vier Jahre alt wird, beginnt im August mit dem Kindergarten. Dort lernen sie spielen, sprechen und mit anderen Kindern zusammenarbeiten. Noten gibt es noch keine.",
-      v: [["die Schulpflicht", "escolaridad obligatoria"], ["obligatorisch", "obligatorio"], ["zusammenarbeiten", "colaborar"]] },
+      t: "Im Aargau ist der Kindergarten Pflicht. Er dauert zwei Jahre. Wichtig ist der 31. Juli: Wer bis dann 4 Jahre alt ist, beginnt im August. Im Kindergarten spielen, singen und sprechen die Kinder viel. Es gibt noch keine Noten.",
+      v: [["die Pflicht", "obligación"], ["spielen", "jugar"], ["die Note", "nota"]] },
     prim: { cls: "prim", n: "Primarschule", s: "6 Jahre · 1.–6. Klasse", age: 6, span: 6, row: 1, rows: 5,
-      alter: "6–12", dauer: "6 Jahre", abschluss: "Übertritt in die Oberstufe",
-      t: "Die Primarschule dauert sechs Jahre. Früher waren es im Aargau nur fünf Jahre, aber seit 2014 sind es sechs, wie in den meisten Kantonen. Alle Kinder lernen zusammen in einer Klasse. Ab der 3. Klasse lernen sie Englisch und ab der 5. Klasse Französisch. In der 6. Klasse entscheiden Eltern, Lehrperson und Kind zusammen, in welchen Schultyp das Kind in der Oberstufe kommt.",
-      v: [["die Fremdsprache", "lengua extranjera"], ["das Zeugnis", "boletín de notas"], ["der Übertritt", "paso / transición"]] },
-    sa:   { cls: "sa", n: "Bezirksschule", s: "höchste Anforderungen · 7.–9.", age: 12, span: 3, row: 1, rows: 2, sek: "Die Bezirksschule («Bez») hat die höchsten Anforderungen. Sie ist typisch für den Aargau. Nach der Bez gehen viele an die Kantonsschule (Gymnasium oder FMS) oder machen eine anspruchsvolle Lehre mit Berufsmaturität." },
-    sb:   { cls: "sb", n: "Sekundarschule", s: "mittlere Anforderungen", age: 12, span: 3, row: 3, rows: 2, sek: "Die Sekundarschule («Sek») hat mittlere Anforderungen. Die meisten Jugendlichen machen danach eine Lehre mit EFZ." },
-    sc:   { cls: "sc", n: "Realschule", s: "Grundanforderungen", age: 12, span: 3, row: 5, rows: 1, sek: "Die Realschule hat Grundanforderungen. Die Klassen sind kleiner. Danach macht man oft eine praktische Lehre mit EBA oder EFZ." },
+      alter: "6–12", dauer: "6 Jahre", abschluss: "danach: Oberstufe",
+      t: "Die Primarschule dauert sechs Jahre. Alle Kinder sind zusammen in einer Klasse. Sie lernen Lesen, Schreiben und Rechnen. Ab der 3. Klasse lernen sie Englisch und ab der 5. Klasse Französisch. In der 6. Klasse sprechen die Eltern mit der Lehrerin oder dem Lehrer. Zusammen entscheiden sie: Welche Schule ist gut für das Kind?",
+      v: [["rechnen", "hacer cuentas"], ["entscheiden", "decidir"], ["die Eltern", "los padres"]] },
+    sa:   { cls: "sa", n: "Bezirksschule", s: "am schwierigsten · 7.–9.", age: 12, span: 3, row: 1, rows: 2, sek: "Die Bezirksschule («Bez») ist am schwierigsten. Sie ist typisch für den Aargau. Danach gehen viele an die Kantonsschule. Andere machen eine Lehre." },
+    sb:   { cls: "sb", n: "Sekundarschule", s: "mittel", age: 12, span: 3, row: 3, rows: 2, sek: "Die Sekundarschule («Sek») ist mittel schwer. Danach machen die meisten Jugendlichen eine Lehre." },
+    sc:   { cls: "sc", n: "Realschule", s: "am einfachsten", age: 12, span: 3, row: 5, rows: 1, sek: "Die Realschule ist am einfachsten. Die Klassen sind klein. Danach machen die Jugendlichen oft eine Lehre." },
     gym:  { cls: "gym", n: "Kantonsschule: Gymnasium", s: "4 Jahre · Matura", age: 15, span: 4, row: 1, rows: 1,
       alter: "15–19", dauer: "4 Jahre", abschluss: "gymnasiale Maturität («Matura»)",
-      t: "Im Aargau gibt es kein Langzeitgymnasium. Man geht zuerst drei Jahre in die Bezirksschule und danach vier Jahre an eine Kantonsschule, zum Beispiel in Aarau, Baden, Wettingen, Wohlen oder Zofingen. Am Ende macht man die Matura. Mit der Matura kann man an jeder Schweizer Universität und an der ETH studieren, meistens ohne Aufnahmeprüfung (Ausnahme: Medizin).",
-      v: [["die Matura", "título de bachillerato"], ["die Kantonsschule", "instituto cantonal (bachillerato)"], ["vorbereiten auf", "preparar para"]] },
+      t: "Die Kantonsschule ist ein Gymnasium. Sie dauert vier Jahre. Man geht nach der Bezirksschule an die Kantonsschule. Am Ende macht man eine grosse Prüfung: die Matura. Mit der Matura kann man an der Universität oder an der ETH studieren. Kantonsschulen gibt es zum Beispiel in Aarau, Baden und Wohlen.",
+      v: [["die Prüfung", "examen"], ["die Matura", "título de bachillerato"], ["studieren", "estudiar en la universidad"]] },
     fms:  { cls: "fms", n: "Fachmittelschule (FMS)", s: "3 Jahre · Kantonsschule", age: 15, span: 3, row: 2, rows: 1,
       alter: "15–18", dauer: "3 Jahre (+ 1 Jahr Fachmaturität)", abschluss: "Fachmittelschulausweis, Fachmaturität",
-      t: "Die FMS ist im Aargau auch an den Kantonsschulen. Sie ist für Jugendliche, die später zum Beispiel im Gesundheitsbereich, im Sozialbereich oder als Lehrperson arbeiten möchten. Mit der Fachmaturität kann man an eine Fachhochschule oder an die Pädagogische Hochschule gehen.",
-      v: [["der Gesundheitsbereich", "sector sanitario"], ["die Lehrperson", "docente"]] },
+      t: "Die Fachmittelschule (FMS) dauert drei Jahre. Sie ist gut für Jugendliche mit einem klaren Ziel. Sie möchten zum Beispiel im Spital, mit Kindern oder als Lehrerin arbeiten. Nach der FMS kann man an eine Fachhochschule gehen.",
+      v: [["das Ziel", "objetivo"], ["das Spital", "hospital (CH)"]] },
     bm:   { cls: "bm", n: "Berufsmaturität (BM)", s: "während oder nach der Lehre", age: 15, span: 4, row: 3, rows: 1,
-      alter: "15–19 oder nach der Lehre", dauer: "parallel zur Lehre (BM 1) oder 1 Jahr nach der Lehre (BM 2)", abschluss: "Berufsmaturitätszeugnis",
-      t: "Wer eine Lehre mit EFZ macht, kann zusätzlich die Berufsmaturität machen. Die Lernenden haben dann mehr Schultage. Mit der BM kann man ohne Prüfung an einer Fachhochschule studieren, zum Beispiel an der FHNW in Brugg-Windisch. Mit einer Zusatzprüfung, der «Passerelle», kann man sogar an die Universität.",
-      v: [["zusätzlich", "adicionalmente"], ["die Zusatzprüfung", "examen complementario"], ["die Fachhochschule", "universidad de ciencias aplicadas"]] },
-    efz:  { cls: "efz", n: "Lehre mit EFZ", s: "3–4 Jahre · Betrieb + Schule", age: 15, span: 4, row: 4, rows: 1,
+      alter: "15–19 oder nach der Lehre", dauer: "während der Lehre oder 1 Jahr danach", abschluss: "Berufsmaturitätszeugnis",
+      t: "Manche Lernende machen neben der Lehre noch die Berufsmaturität (BM). Dann haben sie mehr Schule. Das ist anstrengend, aber es lohnt sich: Mit der BM kann man an einer Fachhochschule studieren. Man kann die BM auch nach der Lehre machen.",
+      v: [["neben", "además de"], ["anstrengend", "agotador"], ["es lohnt sich", "vale la pena"]] },
+    efz:  { cls: "efz", n: "Lehre mit EFZ", s: "3–4 Jahre · Firma + Schule", age: 15, span: 4, row: 4, rows: 1,
       alter: "15–19", dauer: "3 oder 4 Jahre", abschluss: "Eidgenössisches Fähigkeitszeugnis (EFZ)",
-      t: "Rund zwei Drittel der Jugendlichen in der Schweiz machen nach der obligatorischen Schule eine Lehre. Das System ist dual: Die Lernenden arbeiten drei bis vier Tage pro Woche in einem Betrieb und gehen ein bis zwei Tage in die Berufsfachschule. Sie bekommen einen Lohn. Es gibt rund 250 Lehrberufe, zum Beispiel Kaufmann/Kauffrau, Informatiker/in oder Polymechaniker/in. Im Aargau gibt es viele Industriebetriebe mit Lehrstellen.",
-      v: [["die Lehre", "formación profesional (aprendizaje)"], ["der/die Lernende", "aprendiz"], ["der Betrieb", "empresa"], ["die Lehrstelle", "plaza de aprendiz"]] },
+      t: "Die meisten Jugendlichen in der Schweiz machen eine Lehre. Das heisst: Sie lernen einen Beruf. Sie arbeiten 3 oder 4 Tage pro Woche in einer Firma. 1 oder 2 Tage gehen sie in die Berufsschule. Sie bekommen schon einen Lohn. Die Lehre dauert 3 oder 4 Jahre. Am Ende bekommen sie ein Diplom: das EFZ. Es gibt über 200 Berufe, zum Beispiel Kauffrau, Informatiker oder Koch.",
+      v: [["die Lehre", "formación profesional"], ["der Beruf", "profesión"], ["die Firma", "empresa"], ["der Lohn", "salario"]] },
     eba:  { cls: "eba", n: "Lehre mit EBA", s: "2 Jahre", age: 15, span: 2, row: 5, rows: 1,
       alter: "15–17", dauer: "2 Jahre", abschluss: "Eidgenössisches Berufsattest (EBA)",
-      t: "Die zweijährige Lehre mit Berufsattest ist für Jugendliche, die lieber praktisch lernen. Sie ist einfacher als die Lehre mit EFZ. Danach kann man oft direkt ins zweite Jahr einer EFZ-Lehre einsteigen.",
-      v: [["praktisch", "práctico"], ["einsteigen", "incorporarse"]] },
+      t: "Diese Lehre dauert nur zwei Jahre. Sie ist einfacher als die Lehre mit EFZ. Sie ist gut für Jugendliche, die gern praktisch arbeiten. Danach kann man oft noch die EFZ-Lehre machen. Man beginnt dann direkt im 2. Jahr.",
+      v: [["einfach", "fácil"], ["praktisch", "práctico"]] },
     uni:  { cls: "uni", n: "Universität / ETH", s: "Zürich, Basel, Bern …", age: 19, span: 3, row: 1, rows: 1,
       alter: "ab ca. 19", dauer: "Bachelor 3 Jahre, Master 1,5–2 Jahre", abschluss: "Bachelor, Master, Doktorat",
-      t: "Der Aargau hat keine eigene Universität. Die Studierenden gehen meistens nach Zürich, Basel oder Bern. In Zürich ist auch die ETH, eine der besten technischen Hochschulen der Welt. Das Studium ist in Bachelor und Master aufgeteilt. Die Studiengebühren sind im internationalen Vergleich niedrig.",
-      v: [["das Studium", "estudios universitarios"], ["die Studiengebühren", "tasas de matrícula"], ["pendeln", "desplazarse a diario"]] },
+      t: "Im Aargau gibt es keine Universität. Die Studenten fahren jeden Tag nach Zürich, Basel oder Bern. In Zürich ist auch die ETH. Sie ist eine sehr gute Hochschule für Technik. Man studiert zuerst 3 Jahre (Bachelor) und dann etwa 2 Jahre (Master).",
+      v: [["fahren", "ir (en tren/coche)"], ["die Hochschule", "universidad"]] },
     fh:   { cls: "fh", n: "FHNW / PH FHNW", s: "Campus Brugg-Windisch", age: 19, span: 3, row: 2, rows: 2,
       alter: "ab ca. 19", dauer: "Bachelor 3 Jahre, Master 1,5–2 Jahre", abschluss: "Bachelor, Master",
-      t: "Die Fachhochschule Nordwestschweiz (FHNW) hat einen grossen Campus in Brugg-Windisch im Aargau. Fachhochschulen sind praxisorientiert: Man studiert zum Beispiel Technik, Wirtschaft oder Soziale Arbeit. Viele Studierende haben vorher eine Lehre mit Berufsmaturität gemacht. An der Pädagogischen Hochschule (PH FHNW) werden Lehrpersonen ausgebildet.",
-      v: [["praxisorientiert", "orientado a la práctica"], ["ausbilden", "formar"]] },
-    hbb:  { cls: "hbb", n: "Höhere Berufsbildung", s: "HF · Berufsprüfung", age: 19, span: 3, row: 4, rows: 2,
-      alter: "nach Lehre + Berufserfahrung", dauer: "berufsbegleitend, meist 2–3 Jahre", abschluss: "dipl. HF, eidg. Fachausweis, eidg. Diplom",
-      t: "Nach einer Lehre und einigen Jahren Berufserfahrung kann man sich weiterbilden: an einer Höheren Fachschule (HF) oder mit einer eidgenössischen Berufsprüfung oder höheren Fachprüfung, zum Beispiel als Meister. Diese Abschlüsse sind auf dem Arbeitsmarkt sehr geschätzt.",
-      v: [["die Weiterbildung", "formación continua"], ["die Berufserfahrung", "experiencia profesional"], ["geschätzt", "valorado"]] }
+      t: "Die Fachhochschule FHNW ist in Brugg-Windisch im Aargau. Hier lernt man sehr praktisch. Man studiert zum Beispiel Technik, Wirtschaft oder Soziale Arbeit. Viele Studenten haben vorher eine Lehre gemacht. Lehrerinnen und Lehrer lernen an der Pädagogischen Hochschule (PH).",
+      v: [["die Wirtschaft", "economía"], ["die Soziale Arbeit", "trabajo social"]] },
+    hbb:  { cls: "hbb", n: "Höhere Berufsbildung", s: "HF · Meister", age: 19, span: 3, row: 4, rows: 2,
+      alter: "nach der Lehre + ein paar Jahre Arbeit", dauer: "2–3 Jahre, neben der Arbeit", abschluss: "dipl. HF, eidg. Fachausweis, eidg. Diplom",
+      t: "Nach der Lehre arbeitet man ein paar Jahre. Dann kann man weiterlernen, zum Beispiel an einer Höheren Fachschule (HF). Man kann auch eine Prüfung als Meister machen. Diese Diplome sind in der Schweiz viel wert.",
+      v: [["weiterlernen", "seguir estudiando"], ["viel wert sein", "valer mucho"]] }
   };
   var SEK = {
-    alter: "12–15", dauer: "3 Jahre", abschluss: "Ende der obligatorischen Schule (9. Klasse)",
-    t: "Nach der Primarschule kommen die Jugendlichen in die Oberstufe (Sekundarstufe I). Sie dauert drei Jahre. Im Aargau gibt es drei Schultypen: Realschule, Sekundarschule und Bezirksschule. Die Schüler werden nach ihren Leistungen eingeteilt. Ein Wechsel zwischen den Schultypen ist möglich.",
-    v: [["die Leistung", "rendimiento"], ["das Niveau", "nivel"], ["einteilen", "asignar / clasificar"], ["die Oberstufe", "secundaria (7.º–9.º)"]]
+    alter: "12–15", dauer: "3 Jahre", abschluss: "Ende der Schule für alle (9. Klasse)",
+    t: "Nach der Primarschule kommt die Oberstufe. Sie dauert drei Jahre. Im Aargau gibt es drei Schulen: Realschule, Sekundarschule und Bezirksschule. Gute Schüler gehen in die Bezirksschule. Man kann später auch die Schule wechseln.",
+    v: [["die Oberstufe", "secundaria (7.º–9.º)"], ["schwierig", "difícil"], ["wechseln", "cambiar"]]
   };
   ["sa", "sb", "sc"].forEach(function (k) {
     var b = B[k]; b.alter = SEK.alter; b.dauer = SEK.dauer; b.abschluss = SEK.abschluss; b.t = SEK.t + " " + b.sek; b.v = SEK.v;
@@ -441,13 +441,13 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
 
   var PATHS = {
     lena: { who: "Lena", what: "Lehre und Weiterbildung", ids: ["kg", "prim", "sb", "efz", "hbb"],
-      steps: [["4–12", "Kindergarten und Primarschule in Aarau."], ["12–15", "Sie geht in die Sekundarschule."], ["15–18", "Lehre als Kauffrau EFZ bei einer Versicherung. Sie verdient schon Geld."], ["ab 22", "Nach drei Jahren Berufserfahrung besucht sie die Höhere Fachschule (HF) für Wirtschaft."]] },
+      steps: [["4–12", "Kindergarten und Primarschule in Aarau."], ["12–15", "Sie geht in die Sekundarschule."], ["15–18", "Sie macht eine Lehre als Kauffrau bei einer Versicherung. Sie verdient schon Geld."], ["ab 22", "Sie arbeitet drei Jahre. Dann geht sie an eine Höhere Fachschule (HF)."]] },
     marco: { who: "Marco", what: "Kantonsschule und ETH", ids: ["kg", "prim", "sa", "gym", "uni"],
-      steps: [["4–12", "Kindergarten und Primarschule in Baden."], ["12–15", "Er geht in die Bezirksschule."], ["15–19", "Gymnasium an der Kantonsschule Baden. Mit 19 macht er die Matura."], ["ab 19", "Er pendelt nach Zürich und studiert Informatik an der ETH."]] },
-    sara: { who: "Sara", what: "Lehre mit BM und FHNW", ids: ["kg", "prim", "sa", "efz", "bm", "fh"],
-      steps: [["4–12", "Kindergarten und Primarschule in Brugg."], ["12–15", "Sie geht in die Bezirksschule."], ["15–19", "Lehre als Informatikerin EFZ und gleichzeitig die Berufsmaturität."], ["ab 19", "Studium an der FHNW in Brugg-Windisch. Mit der Passerelle könnte sie auch an die Universität."]] },
+      steps: [["4–12", "Kindergarten und Primarschule in Baden."], ["12–15", "Er geht in die Bezirksschule."], ["15–19", "Er geht an die Kantonsschule in Baden. Mit 19 macht er die Matura."], ["ab 19", "Er fährt jeden Tag nach Zürich. Er studiert Informatik an der ETH."]] },
+    sara: { who: "Sara", what: "Lehre mit BM und Fachhochschule", ids: ["kg", "prim", "sa", "efz", "bm", "fh"],
+      steps: [["4–12", "Kindergarten und Primarschule in Brugg."], ["12–15", "Sie geht in die Bezirksschule."], ["15–19", "Sie macht eine Lehre als Informatikerin. Gleichzeitig macht sie die Berufsmaturität."], ["ab 19", "Sie studiert an der Fachhochschule in Brugg-Windisch."]] },
     jonas: { who: "Jonas", what: "Schritt für Schritt", ids: ["kg", "prim", "sc", "eba", "efz"],
-      steps: [["4–12", "In der Schule in Wohlen hat Jonas oft Mühe."], ["12–15", "Er geht in die Realschule."], ["15–17", "Er macht zuerst eine zweijährige Lehre mit EBA als Logistiker."], ["17–19", "Danach steigt er ins zweite Jahr der Lehre mit EFZ ein. Kein Abschluss ohne Anschluss!"]] }
+      steps: [["4–12", "Jonas findet die Schule schwierig."], ["12–15", "Er geht in die Realschule."], ["15–17", "Er macht eine Lehre mit EBA als Logistiker. Sie dauert 2 Jahre."], ["17–19", "Dann macht er noch die Lehre mit EFZ. Er beginnt direkt im 2. Jahr."]] }
   };
 
   var dia = document.getElementById("dia");
@@ -464,7 +464,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     place(h, a - 3, 1, 1, 1); dia.appendChild(h);
     if (a <= 14) { var hh = el("div", "hd h", a < 6 ? "KG " + (a - 3) : (a - 5) + "."); place(hh, a - 3, 1, 2, 1); dia.appendChild(hh); }
   }
-  [["Obligatorische Schule", 1, 11, ""], ["Sekundarstufe II", 12, 4, ""], ["Tertiärstufe", 16, 3, " ter"]].forEach(function (x) {
+  [["Schule für alle", 1, 11, ""], ["Nach der Schule", 12, 4, ""], ["Hochschule", 16, 3, " ter"]].forEach(function (x) {
     var b = el("div", "band" + x[3], x[0]); place(b, x[1], x[2], 3, 1); dia.appendChild(b);
   });
 
@@ -542,12 +542,12 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
   function overview() {
     detail.innerHTML =
       '<div class="main"><span class="eyebrow">So liest du die Grafik</span><h3>Von links nach rechts: das Alter</h3>' +
-      "<p>Die ersten 11 Jahre sind für alle obligatorisch. Mit etwa 15 Jahren wählen die Jugendlichen einen Weg: eine Lehre (berufliche Grundbildung) oder eine Mittelschule (Gymnasium, FMS). Danach gibt es viele Möglichkeiten zum Weiterlernen.</p>" +
+      "<p>Die ersten 11 Jahre sind für alle Kinder Pflicht. Mit 15 Jahren wählen die Jugendlichen: eine Lehre oder eine Schule (Kantonsschule, FMS). Danach kann man immer weiterlernen.</p>" +
       '<p><button class="linkbtn" type="button" data-k="efz">Mit der Lehre beginnen →</button></p></div>' +
       '<div class="vocab"><h3>Farben</h3><div class="legend" style="flex-direction:column">' +
-      legend("var(--b-prim)", "Obligatorische Schule") + legend("var(--b-sa)", "Oberstufe: Bez, Sek, Real") +
-      legend("var(--b-gym)", "Allgemeinbildende Schulen") + legend("var(--b-efz)", "Berufliche Grundbildung (Lehre)") +
-      legend("var(--b-uni)", "Hochschulen und Höhere Berufsbildung") + "</div></div>";
+      legend("var(--b-prim)", "Schule für alle") + legend("var(--b-sa)", "Oberstufe: Bez, Sek, Real") +
+      legend("var(--b-gym)", "Schulen nach der Oberstufe") + legend("var(--b-efz)", "Lehre (einen Beruf lernen)") +
+      legend("var(--b-uni)", "Hochschulen und Weiterbildung") + "</div></div>";
     var lb = detail.querySelector(".linkbtn"); lb.addEventListener("click", function () { show("efz"); });
     highlight(null);
   }
@@ -565,7 +565,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     function chips(list, empty) {
       return list.length ? '<div class="chips">' + list.map(function (x) { return '<button type="button" class="' + B[x].cls + '" data-k="' + x + '">' + B[x].n + "</button>"; }).join("") + "</div>" : '<p class="none">' + empty + "</p>";
     }
-    var flow = '<div class="flow"><div><h4>Woher?</h4>' + chips(PREV[k], "Hier beginnt die Schule.") + '</div><div><h4>Wohin danach?</h4>' + chips(NEXT[k], "Berufsleben oder Weiterbildung") + "</div></div>";
+    var flow = '<div class="flow"><div><h4>Woher?</h4>' + chips(PREV[k], "Hier beginnt die Schule.") + '</div><div><h4>Wohin danach?</h4>' + chips(NEXT[k], "Arbeiten oder weiterlernen") + "</div></div>";
     var vocab = b.v.map(function (p) { return "<dt>" + p[0] + "</dt><dd>" + p[1] + "</dd>"; }).join("");
     detail.innerHTML =
       '<div class="main"><span class="eyebrow">' + legendName(b.cls) + "</span><h3>" + b.n + "</h3>" +
@@ -576,10 +576,10 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     detail.querySelectorAll(".flow button").forEach(function (x) { x.addEventListener("click", function () { show(x.getAttribute("data-k")); }); });
   }
   function legendName(c) {
-    return { kg: "Obligatorische Schule", prim: "Obligatorische Schule", sa: "Oberstufe (Sek I)", sb: "Oberstufe (Sek I)", sc: "Oberstufe (Sek I)",
-      gym: "Sekundarstufe II · allgemeinbildend", fms: "Sekundarstufe II · allgemeinbildend",
-      efz: "Sekundarstufe II · Berufsbildung", bm: "Sekundarstufe II · Berufsbildung", eba: "Sekundarstufe II · Berufsbildung",
-      uni: "Tertiärstufe", fh: "Tertiärstufe", hbb: "Tertiärstufe · Berufsbildung" }[c];
+    return { kg: "Schule für alle", prim: "Schule für alle", sa: "Oberstufe", sb: "Oberstufe", sc: "Oberstufe",
+      gym: "Nach der Schule · Schule", fms: "Nach der Schule · Schule",
+      efz: "Nach der Schule · Lehre", bm: "Nach der Schule · Lehre", eba: "Nach der Schule · Lehre",
+      uni: "Hochschule", fh: "Hochschule", hbb: "Weiterbildung" }[c];
   }
 
   // Paths
@@ -599,7 +599,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     Object.keys(pBtns).forEach(function (x) { pBtns[x].setAttribute("aria-pressed", String(x === k)); });
     if (!k) {
       if (!keepDetail) highlight(null);
-      pathbox.innerHTML = '<p class="motto">Kein Abschluss ohne Anschluss.</p><p>Das heisst: Kein Weg ist eine Sackgasse. Nach jedem Abschluss kann man weiterlernen. Wähle oben eine Person, um ein Beispiel zu sehen.</p>';
+      pathbox.innerHTML = '<p class="motto">Kein Abschluss ohne Anschluss.</p><p>Das heisst: Nach jeder Schule gibt es einen nächsten Schritt. Man kann immer weiterlernen. Wähle oben eine Person.</p>';
       return;
     }
     var p = PATHS[k];
@@ -614,13 +614,13 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
 
   // Quiz
   var Q = [
-    ["Wie lange dauert die Primarschule in der Schweiz?", ["4 Jahre", "6 Jahre", "8 Jahre"], 1, "Sechs Jahre, also zwei Jahre länger als die Grundschule in den meisten Bundesländern."],
-    ["Was machen die meisten Jugendlichen nach der obligatorischen Schule?", ["Sie gehen ans Gymnasium.", "Sie machen eine Lehre.", "Sie arbeiten ohne Ausbildung."], 1, "Rund zwei Drittel machen eine Lehre."],
-    ["Wie heisst der Abschluss am Gymnasium in der Schweiz?", ["Abitur", "Matura", "Bachelor"], 1, "In der Schweiz sagt man Matura (gymnasiale Maturität)."],
-    ["Wie viele Kantone haben ihr eigenes Schulsystem?", ["4", "16", "26"], 2, "26 Kantone. HarmoS macht die Systeme ähnlicher."],
-    ["Wie heisst im Aargau der Schultyp mit den höchsten Anforderungen in der Oberstufe?", ["Realschule", "Sekundarschule", "Bezirksschule"], 2, "Die Bezirksschule, kurz «Bez»."],
-    ["Mit welchem Abschluss kann man ohne Prüfung an eine Fachhochschule wie die FHNW?", ["Berufsmaturität", "EBA", "Abschluss der Primarschule"], 0, "Mit der Berufsmaturität (BM)."],
-    ["Was bedeutet «dual» bei der Lehre?", ["nur Schule", "Betrieb und Berufsfachschule", "zwei Sprachen lernen"], 1, "Man lernt im Betrieb und in der Berufsfachschule."]
+    ["Wie lange dauert die Primarschule in der Schweiz?", ["4 Jahre", "6 Jahre", "8 Jahre"], 1, "Sechs Jahre. In Deutschland sind es meistens vier Jahre."],
+    ["Was machen die meisten Jugendlichen nach der Schule?", ["Sie gehen ans Gymnasium.", "Sie machen eine Lehre.", "Sie arbeiten ohne Ausbildung."], 1, "Etwa 2 von 3 Jugendlichen machen eine Lehre."],
+    ["Wie heisst der Abschluss am Gymnasium in der Schweiz?", ["Abitur", "Matura", "Bachelor"], 1, "In der Schweiz sagt man Matura."],
+    ["Wie viele Kantone haben ihr eigenes Schulsystem?", ["4", "16", "26"], 2, "Es gibt 26 Kantone, also 26 Schulsysteme."],
+    ["Welche Schule ist im Aargau in der Oberstufe am schwierigsten?", ["Realschule", "Sekundarschule", "Bezirksschule"], 2, "Die Bezirksschule, kurz «Bez»."],
+    ["Mit welchem Diplom kann man an die Fachhochschule gehen?", ["Berufsmaturität", "EBA", "Abschluss der Primarschule"], 0, "Mit der Berufsmaturität (BM)."],
+    ["Was bedeutet «dual» bei der Lehre?", ["nur Schule", "Firma und Berufsschule", "zwei Sprachen lernen"], 1, "Man lernt in der Firma und in der Berufsschule."]
   ];
   var qz = document.getElementById("qz"), qi = 0, ans = [];
   function score() { return ans.filter(function (a, i) { return a === Q[i][2]; }).length; }
@@ -654,12 +654,12 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
 
   // Speaker script: [start sec, end sec, title, text, what to show]
   var PARTS = [
-    [0, 40, "Einleitung", "Guten Tag zusammen! Im Kurs haben wir das deutsche Schulsystem gesehen. Heute möchte ich euch das Schweizer Schulsystem vorstellen, und zwar am Beispiel vom Kanton Aargau. Ich spreche über vier Punkte: die obligatorische Schule, die Sekundarstufe II, die Hochschulen und zum Schluss einen kurzen Vergleich mit Deutschland. Am Ende gibt es ein kleines Quiz für euch.", "Zeigen: Titel und die drei Zahlen oben."],
-    [40, 100, "Kantone und obligatorische Schule", "Zuerst etwas Wichtiges: In der Schweiz ist die Schule Sache der Kantone. Es gibt 26 Kantone, also eigentlich 26 Schulsysteme! Viele Kantone haben das HarmoS-Konkordat unterschrieben, der Aargau nicht. Trotzdem ist das System ähnlich. Im Aargau dauert die obligatorische Schule elf Jahre. Sie beginnt mit vier Jahren, mit zwei Jahren Kindergarten. Danach kommt die Primarschule. Sie dauert sechs Jahre, also zwei Jahre länger als die Grundschule in Deutschland. Ab der dritten Klasse lernen die Kinder Englisch und ab der fünften Klasse Französisch.", "Klicken: Kindergarten, dann Primarschule."],
-    [100, 150, "Oberstufe: Real, Sek und Bez", "Mit ungefähr zwölf Jahren kommen die Kinder in die Oberstufe. Sie dauert drei Jahre. Im Aargau gibt es drei Schultypen: die Realschule, die Sekundarschule und die Bezirksschule. Die Bezirksschule hat die höchsten Anforderungen. Man kann aber auch wechseln. Anders als in Zürich gibt es im Aargau kein Langzeitgymnasium. Alle gehen zuerst in die Oberstufe.", "Klicken: Bezirksschule, dann Realschule."],
-    [150, 225, "Sekundarstufe II: Lehre oder Kantonsschule", "Nach der obligatorischen Schule, mit etwa fünfzehn Jahren, gibt es zwei grosse Wege. Der erste und häufigste Weg ist die Lehre. In der Schweiz machen rund zwei Drittel der Jugendlichen eine Lehre. Das System ist dual: Die Lernenden arbeiten drei bis vier Tage in einem Betrieb und gehen ein bis zwei Tage in die Berufsfachschule. Sie verdienen schon Geld. Der zweite Weg ist die Kantonsschule, zum Beispiel in Aarau oder Baden. Dort macht man nach vier Jahren die Matura, das ist wie das Abitur in Deutschland. In der Schweiz hat die Lehre einen sehr guten Ruf. Sie ist keine schlechtere Wahl.", "Klicken: Lehre mit EFZ, dann Kantonsschule."],
-    [225, 270, "Hochschulen: Kein Abschluss ohne Anschluss", "Der Aargau hat keine eigene Universität. Nach der Matura gehen viele nach Zürich, zum Beispiel an die ETH, oder nach Basel. Mit einer Lehre und der Berufsmaturität kann man an der Fachhochschule studieren, zum Beispiel an der FHNW in Brugg-Windisch. Das Motto ist: Kein Abschluss ohne Anschluss. Das bedeutet: Kein Weg ist eine Sackgasse. Man kann immer weiterlernen.", "Zeigen: Weg von Sara (Abschnitt «Wege»)."],
-    [270, 300, "Vergleich und Schluss", "Zum Schluss ein kurzer Vergleich: In Deutschland trennt man die Kinder nach vier Jahren, in der Schweiz nach sechs Jahren. In Deutschland heisst der Abschluss Abitur, in der Schweiz Matura. Und in der Schweiz machen viel mehr Jugendliche eine Lehre. Vielen Dank für eure Aufmerksamkeit! Jetzt das Quiz: Wer weiss die Antworten?", "Zeigen: Vergleichstabelle, dann Quiz."]
+    [0, 40, "Einleitung", "Hallo zusammen! Im Kurs haben wir das Schulsystem in Deutschland gesehen. Heute zeige ich euch das Schulsystem in der Schweiz. Ich nehme den Kanton Aargau als Beispiel. Ich spreche über vier Themen: die Schule für alle, die Zeit nach der Schule, die Hochschulen und einen Vergleich mit Deutschland. Am Ende machen wir ein kleines Quiz.", "Zeigen: Titel und die drei Zahlen oben."],
+    [40, 100, "Schule für alle", "In der Schweiz hat jeder Kanton sein eigenes Schulsystem. Es gibt 26 Kantone, also 26 Schulsysteme! Aber die Systeme sind ähnlich. Im Aargau gehen alle Kinder elf Jahre zur Schule. Sie beginnen mit vier Jahren im Kindergarten. Der Kindergarten dauert zwei Jahre. Danach kommt die Primarschule. Sie dauert sechs Jahre. In Deutschland sind es meistens nur vier Jahre. Ab der dritten Klasse lernen die Kinder Englisch und ab der fünften Klasse Französisch.", "Klicken: Kindergarten, dann Primarschule."],
+    [100, 150, "Oberstufe: Real, Sek und Bez", "Mit zwölf Jahren kommen die Kinder in die Oberstufe. Sie dauert drei Jahre. Im Aargau gibt es drei Schulen: die Realschule, die Sekundarschule und die Bezirksschule. Die Bezirksschule ist am schwierigsten. Man kann aber später auch die Schule wechseln.", "Klicken: Bezirksschule, dann Realschule."],
+    [150, 225, "Nach der Schule: Lehre oder Kantonsschule", "Mit fünfzehn Jahren ist die Schule für alle fertig. Dann gibt es zwei Wege. Der erste Weg ist die Lehre. Etwa zwei von drei Jugendlichen machen eine Lehre. Sie arbeiten drei oder vier Tage pro Woche in einer Firma. Ein oder zwei Tage gehen sie in die Berufsschule. Sie verdienen schon Geld. Der zweite Weg ist die Kantonsschule. Sie dauert vier Jahre. Am Ende macht man die Matura. Die Matura ist wie das Abitur in Deutschland. In der Schweiz ist die Lehre sehr gut. Sie ist kein schlechter Weg.", "Klicken: Lehre mit EFZ, dann Kantonsschule."],
+    [225, 270, "Hochschulen", "Im Aargau gibt es keine Universität. Mit der Matura gehen viele nach Zürich, zum Beispiel an die ETH. Mit einer Lehre und der Berufsmaturität kann man an die Fachhochschule gehen. Sie ist in Brugg-Windisch. Die wichtigste Idee ist: Kein Abschluss ohne Anschluss. Das heisst: Nach jeder Schule kann man weiterlernen.", "Zeigen: Weg von Sara (Abschnitt «Wege»)."],
+    [270, 300, "Vergleich und Schluss", "Zum Schluss ein Vergleich: In Deutschland trennt man die Kinder nach vier Jahren. In der Schweiz trennt man sie nach sechs Jahren. In Deutschland macht man das Abitur, in der Schweiz die Matura. Und in der Schweiz machen viel mehr Jugendliche eine Lehre. Vielen Dank! Jetzt machen wir das Quiz.", "Zeigen: Vergleichstabelle, dann Quiz."]
   ];
   var partsEl = document.getElementById("parts"), partEls = [];
   function mmss(s) { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); }
@@ -668,7 +668,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     d.innerHTML = '<div class="ph"><h3>' + p[2] + '</h3><span class="tm">' + mmss(p[0]) + "–" + mmss(p[1]) + "</span></div><p>" + p[3] + '</p><span class="show">' + p[4] + "</span>";
     partsEl.appendChild(d); partEls.push(d);
   });
-  var GLOSS = [["die Schulpflicht", "escolaridad obligatoria"], ["die Lehre", "formación profesional"], ["der Betrieb", "empresa"], ["die Leistung", "rendimiento"], ["einteilen", "clasificar"], ["die Matura", "bachillerato"], ["die Fachhochschule", "univ. de ciencias aplicadas"], ["die Sackgasse", "callejón sin salida"], ["der Ruf", "reputación"], ["die Wahl", "elección"], ["der Anschluss", "continuación / conexión"], ["zuständig sein für", "ser responsable de"], ["die Bezirksschule", "secundaria de nivel alto (AG)"], ["pendeln", "desplazarse a diario"]];
+  var GLOSS = [["die Pflicht", "obligación"], ["dauern", "durar"], ["die Lehre", "formación profesional"], ["die Firma", "empresa"], ["die Berufsschule", "escuela profesional"], ["verdienen", "ganar (dinero)"], ["die Matura", "bachillerato"], ["die Prüfung", "examen"], ["die Fachhochschule", "univ. de ciencias aplicadas"], ["schwierig", "difícil"], ["wechseln", "cambiar"], ["trennen", "separar"], ["weiterlernen", "seguir estudiando"], ["der Vergleich", "comparación"]];
   document.getElementById("gloss").innerHTML = GLOSS.map(function (g) { return "<div><dt>" + g[0] + "</dt><dd>" + g[1] + "</dd></div>"; }).join("");
 
   var clock = document.getElementById("clock"), bar = document.getElementById("progbar"), tstart = document.getElementById("tstart");
