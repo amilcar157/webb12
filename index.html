@@ -338,7 +338,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
         <thead><tr><th scope="col"></th><th scope="col">Deutschland</th><th scope="col" class="ch">Schweiz</th></tr></thead>
         <tbody>
           <tr><th scope="row">Wer macht die Regeln?</th><td>16 Bundesländer</td><td>26 Kantone</td></tr>
-          <tr><th scope="row">Schulpflicht beginnt</th><td>mit 6 Jahren</td><td>mit 4 Jahren (Kindergarten)</td></tr>
+          <tr><th scope="row">Schulpflicht beginnt</th><td>mit 6 Jahren</td><td>meistens mit 4 Jahren (Kindergarten)</td></tr>
           <tr><th scope="row">Grund-/Primarschule</th><td>4 Jahre (in Berlin und Brandenburg 6)</td><td>6 Jahre</td></tr>
           <tr><th scope="row">Wann trennt man die Kinder?</th><td>nach der 4. Klasse</td><td>nach der 6. Klasse</td></tr>
           <tr><th scope="row">Schulen danach</th><td>Gymnasium, Realschule, Hauptschule, Gesamtschule</td><td>Im Aargau: Realschule, Sekundarschule, Bezirksschule</td></tr>
@@ -378,7 +378,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
   </section>
 
   <footer>
-    <span>Zahlen gerundet; die Details sind in jedem Kanton etwas anders. Quellen: <a href="https://www.edk.ch" target="_blank" rel="noopener">EDK</a>, <a href="https://www.sbfi.admin.ch" target="_blank" rel="noopener">SBFI</a>, <a href="https://www.berufsberatung.ch" target="_blank" rel="noopener">berufsberatung.ch</a>, <a href="https://www.bfs.admin.ch" target="_blank" rel="noopener">BFS</a>.</span>
+    <span>Zahlen gerundet; die Details sind in jedem Kanton etwas anders. Quellen: <a href="https://www.edk.ch" target="_blank" rel="noopener">EDK</a>, <a href="https://www.sbfi.admin.ch" target="_blank" rel="noopener">SBFI</a>, <a href="https://www.berufsberatung.ch" target="_blank" rel="noopener">berufsberatung.ch</a>, <a href="https://www.bfs.admin.ch" target="_blank" rel="noopener">BFS</a>, <a href="https://www.ag.ch/de/verwaltung/bks/kindergarten-volksschule/struktur-organisation/schulstufen" target="_blank" rel="noopener">Kanton Aargau</a>.</span>
   </footer>
 </div>
 
@@ -392,18 +392,18 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
       v: [["die Pflicht", "obligación"], ["spielen", "jugar"], ["die Note", "nota"]] },
     prim: { cls: "prim", n: "Primarschule", s: "6 Jahre · 1.–6. Klasse", age: 6, span: 6, row: 1, rows: 5,
       alter: "6–12", dauer: "6 Jahre", abschluss: "danach: Oberstufe",
-      t: "Die Primarschule dauert sechs Jahre. Alle Kinder sind zusammen in einer Klasse. Sie lernen Lesen, Schreiben und Rechnen. Ab der 3. Klasse lernen sie Englisch und ab der 5. Klasse Französisch. In der 6. Klasse sprechen die Eltern mit der Lehrerin oder dem Lehrer. Zusammen entscheiden sie: Welche Schule ist gut für das Kind?",
+      t: "Die Primarschule dauert sechs Jahre. Alle Kinder sind zusammen in einer Klasse. Sie lernen Lesen, Schreiben und Rechnen. Ab der 3. Klasse lernen sie Englisch und ab der 5. Klasse Französisch. In der 6. Klasse empfiehlt die Lehrerin oder der Lehrer eine Schule für die Oberstufe. Das hängt von den Noten ab. Die Eltern sprechen mit der Schule darüber.",
       v: [["rechnen", "hacer cuentas"], ["entscheiden", "decidir"], ["die Eltern", "los padres"]] },
-    sa:   { cls: "sa", n: "Bezirksschule", s: "am schwierigsten · 7.–9.", age: 12, span: 3, row: 1, rows: 2, sek: "Die Bezirksschule («Bez») ist am schwierigsten. Sie ist typisch für den Aargau. Nur von hier kommt man ans Gymnasium. Man braucht gute Noten. Andere machen eine Lehre." },
-    sb:   { cls: "sb", n: "Sekundarschule", s: "mittel", age: 12, span: 3, row: 3, rows: 2, sek: "Die Sekundarschule («Sek») ist mittel schwer. Danach machen die meisten Jugendlichen eine Lehre. Mit sehr guten Noten kann man auch an die FMS gehen. Ans Gymnasium kommt man im Aargau nur von der Bezirksschule." },
+    sa:   { cls: "sa", n: "Bezirksschule", s: "am schwierigsten · 7.–9.", age: 12, span: 3, row: 1, rows: 2, sek: "Die Bezirksschule («Bez») ist am schwierigsten. Sie ist typisch für den Aargau. Normalerweise kommt man nur von hier ans Gymnasium. Man braucht gute Noten. Andere machen eine Lehre." },
+    sb:   { cls: "sb", n: "Sekundarschule", s: "mittel", age: 12, span: 3, row: 3, rows: 2, sek: "Die Sekundarschule («Sek») ist mittel schwer. Danach machen die meisten Jugendlichen eine Lehre. Mit sehr guten Noten kann man auch an die FMS gehen. Ans Gymnasium kommt man normalerweise nur von der Bezirksschule." },
     sc:   { cls: "sc", n: "Realschule", s: "am einfachsten", age: 12, span: 3, row: 5, rows: 1, sek: "Die Realschule ist am einfachsten. Die Klassen sind klein. Danach machen die Jugendlichen eine Lehre." },
     gym:  { cls: "gym", n: "Kantonsschule: Gymnasium", s: "4 Jahre · Matura", age: 15, span: 4, row: 1, rows: 1,
       alter: "15–19", dauer: "4 Jahre", abschluss: "gymnasiale Maturität («Matura»)",
-      t: "Die Kantonsschule ist ein Gymnasium. Sie dauert vier Jahre. Man geht nach der Bezirksschule an die Kantonsschule. Am Ende macht man eine grosse Prüfung: die Matura. Mit der Matura kann man an der Universität oder an der ETH studieren. Kantonsschulen gibt es zum Beispiel in Aarau, Baden und Wohlen.",
+      t: "Die Kantonsschule ist ein Gymnasium. Sie dauert vier Jahre. Man geht nach der Bezirksschule an die Kantonsschule. Dafür braucht man gute Noten. Am Ende macht man eine grosse Prüfung: die Matura. Mit der Matura kann man an der Universität oder an der ETH studieren. Für die Fachhochschule braucht man zuerst noch ein Jahr Praxis (ein Praktikum). Kantonsschulen gibt es zum Beispiel in Aarau, Baden und Wohlen.",
       v: [["die Prüfung", "examen"], ["die Matura", "título de bachillerato"], ["studieren", "estudiar en la universidad"]] },
     fms:  { cls: "fms", n: "Fachmittelschule (FMS)", s: "3 Jahre · Kantonsschule", age: 15, span: 3, row: 2, rows: 1,
       alter: "15–18", dauer: "3 Jahre (+ 1 Jahr Fachmaturität)", abschluss: "Fachmittelschulausweis, Fachmaturität",
-      t: "Die Fachmittelschule (FMS) dauert drei Jahre. Sie ist gut für Jugendliche mit einem klaren Ziel. Sie möchten zum Beispiel im Spital, mit Kindern oder als Lehrerin arbeiten. Nach der FMS kann man an eine Fachhochschule gehen.",
+      t: "Die Fachmittelschule (FMS) dauert drei Jahre. Sie ist gut für Jugendliche mit einem klaren Ziel. Sie möchten zum Beispiel im Spital, mit Kindern oder als Lehrerin arbeiten. Nach der FMS macht man noch die Fachmaturität (etwa 1 Jahr). Dann kann man an eine Fachhochschule gehen.",
       v: [["das Ziel", "objetivo"], ["das Spital", "hospital (CH)"]] },
     bm:   { cls: "bm", n: "Berufsmaturität (BM)", s: "während oder nach der Lehre", age: 15, span: 4, row: 3, rows: 1,
       alter: "15–19 oder nach der Lehre", dauer: "während der Lehre oder 1 Jahr danach", abschluss: "Berufsmaturitätszeugnis",
@@ -614,7 +614,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
 
   // Quiz
   var Q = [
-    ["Wie lange dauert die Primarschule in der Schweiz?", ["4 Jahre", "6 Jahre", "8 Jahre"], 1, "Sechs Jahre. In Deutschland sind es meistens vier Jahre."],
+    ["Wie lange dauert die Primarschule im Aargau?", ["4 Jahre", "6 Jahre", "8 Jahre"], 1, "Sechs Jahre. In Deutschland sind es meistens vier Jahre."],
     ["Was machen die meisten Jugendlichen nach der Schule?", ["Sie gehen ans Gymnasium.", "Sie machen eine Lehre.", "Sie arbeiten ohne Ausbildung."], 1, "Etwa 2 von 3 Jugendlichen machen eine Lehre."],
     ["Wie heisst der Abschluss am Gymnasium in der Schweiz?", ["Abitur", "Matura", "Bachelor"], 1, "In der Schweiz sagt man Matura."],
     ["Wie viele Kantone haben ihr eigenes Schulsystem?", ["4", "16", "26"], 2, "Es gibt 26 Kantone, also 26 Schulsysteme."],
@@ -657,7 +657,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     [0, 40, "Einleitung", "Hallo zusammen! Im Kurs haben wir das Schulsystem in Deutschland gesehen. Heute zeige ich euch das Schulsystem in der Schweiz. Ich nehme den Kanton Aargau als Beispiel. Ich spreche über vier Themen: die Schule für alle, die Zeit nach der Schule, die Hochschulen und einen Vergleich mit Deutschland. Am Ende machen wir ein kleines Quiz.", "Zeigen: Titel und die drei Zahlen oben."],
     [40, 100, "Schule für alle", "In der Schweiz hat jeder Kanton sein eigenes Schulsystem. Es gibt 26 Kantone, also 26 Schulsysteme! Aber die Systeme sind ähnlich. Im Aargau gehen alle Kinder elf Jahre zur Schule. Sie beginnen mit vier Jahren im Kindergarten. Der Kindergarten dauert zwei Jahre. Danach kommt die Primarschule. Sie dauert sechs Jahre. In Deutschland sind es meistens nur vier Jahre. Ab der dritten Klasse lernen die Kinder Englisch und ab der fünften Klasse Französisch.", "Klicken: Kindergarten, dann Primarschule."],
     [100, 150, "Oberstufe: Real, Sek und Bez", "Mit zwölf Jahren kommen die Kinder in die Oberstufe. Sie dauert drei Jahre. Im Aargau gibt es drei Schulen: die Realschule, die Sekundarschule und die Bezirksschule. Die Bezirksschule ist am schwierigsten. Man kann aber später auch die Schule wechseln.", "Klicken: Bezirksschule, dann Realschule."],
-    [150, 225, "Nach der Schule: Lehre oder Kantonsschule", "Mit fünfzehn Jahren ist die Schule für alle fertig. Dann gibt es zwei Wege. Der erste Weg ist die Lehre. Etwa zwei von drei Jugendlichen machen eine Lehre. Sie arbeiten drei oder vier Tage pro Woche in einer Firma. Ein oder zwei Tage gehen sie in die Berufsschule. Sie verdienen schon Geld. Der zweite Weg ist die Kantonsschule. Sie dauert vier Jahre. Am Ende macht man die Matura. Die Matura ist wie das Abitur in Deutschland. In der Schweiz ist die Lehre sehr gut. Sie ist kein schlechter Weg.", "Klicken: Lehre mit EFZ, dann Kantonsschule."],
+    [150, 225, "Nach der Schule: Lehre oder Kantonsschule", "Mit fünfzehn Jahren ist die Schule für alle fertig. Dann gibt es zwei Wege. Der erste Weg ist die Lehre. Etwa zwei von drei Jugendlichen machen eine Lehre. Sie arbeiten drei oder vier Tage pro Woche in einer Firma. Ein oder zwei Tage gehen sie in die Berufsschule. Sie verdienen schon Geld. Der zweite Weg ist die Kantonsschule. Dafür braucht man gute Noten in der Bezirksschule. Die Kantonsschule dauert vier Jahre. Am Ende macht man die Matura. Die Matura ist wie das Abitur in Deutschland. In der Schweiz ist die Lehre sehr gut. Sie ist kein schlechter Weg.", "Klicken: Lehre mit EFZ, dann Kantonsschule."],
     [225, 270, "Hochschulen", "Im Aargau gibt es keine Universität. Mit der Matura gehen viele nach Zürich, zum Beispiel an die ETH. Mit einer Lehre und der Berufsmaturität kann man an die Fachhochschule gehen. Sie ist in Brugg-Windisch. Die wichtigste Idee ist: Kein Abschluss ohne Anschluss. Das heisst: Nach jeder Schule kann man weiterlernen.", "Zeigen: Weg von Sara (Abschnitt «Wege»)."],
     [270, 300, "Vergleich und Schluss", "Zum Schluss ein Vergleich: In Deutschland trennt man die Kinder nach vier Jahren. In der Schweiz trennt man sie nach sechs Jahren. In Deutschland macht man das Abitur, in der Schweiz die Matura. Und in der Schweiz machen viel mehr Jugendliche eine Lehre. Vielen Dank! Jetzt machen wir das Quiz.", "Zeigen: Vergleichstabelle, dann Quiz."]
   ];
