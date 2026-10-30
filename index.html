@@ -318,7 +318,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     <span class="eyebrow">1 · Überblick</span>
     <h2>Vom Kindergarten bis zur Hochschule: der Aargau</h2>
     <div class="dia-scroll"><div class="dia" id="dia" role="group" aria-label="Schulsystem nach Alter"></div></div>
-    <p class="hint">Klick auf einen Block. Die Pfeile zeigen: Woher kommt man (gepunktet)? Wohin geht man danach? Oben stehen das Alter und die Klasse (KG = Kindergarten). Die Lehre mit EFZ dauert 3 oder 4 Jahre (hellere Farbe).</p>
+    <p class="hint">Klick auf einen Block. Die Pfeile zeigen: Woher kommt man (gepunktet)? Wohin geht man direkt danach? Oben stehen das Alter und die Klasse (KG = Kindergarten). Die Lehre mit EFZ dauert 3 oder 4 Jahre (hellere Farbe).</p>
     <div class="detail" id="detail" aria-live="polite"></div>
   </section>
 
@@ -394,9 +394,9 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
       alter: "6–12", dauer: "6 Jahre", abschluss: "danach: Oberstufe",
       t: "Die Primarschule dauert sechs Jahre. Alle Kinder sind zusammen in einer Klasse. Sie lernen Lesen, Schreiben und Rechnen. Ab der 3. Klasse lernen sie Englisch und ab der 5. Klasse Französisch. In der 6. Klasse sprechen die Eltern mit der Lehrerin oder dem Lehrer. Zusammen entscheiden sie: Welche Schule ist gut für das Kind?",
       v: [["rechnen", "hacer cuentas"], ["entscheiden", "decidir"], ["die Eltern", "los padres"]] },
-    sa:   { cls: "sa", n: "Bezirksschule", s: "am schwierigsten · 7.–9.", age: 12, span: 3, row: 1, rows: 2, sek: "Die Bezirksschule («Bez») ist am schwierigsten. Sie ist typisch für den Aargau. Danach gehen viele an die Kantonsschule. Andere machen eine Lehre." },
-    sb:   { cls: "sb", n: "Sekundarschule", s: "mittel", age: 12, span: 3, row: 3, rows: 2, sek: "Die Sekundarschule («Sek») ist mittel schwer. Danach machen die meisten Jugendlichen eine Lehre." },
-    sc:   { cls: "sc", n: "Realschule", s: "am einfachsten", age: 12, span: 3, row: 5, rows: 1, sek: "Die Realschule ist am einfachsten. Die Klassen sind klein. Danach machen die Jugendlichen oft eine Lehre." },
+    sa:   { cls: "sa", n: "Bezirksschule", s: "am schwierigsten · 7.–9.", age: 12, span: 3, row: 1, rows: 2, sek: "Die Bezirksschule («Bez») ist am schwierigsten. Sie ist typisch für den Aargau. Nur von hier kommt man ans Gymnasium. Man braucht gute Noten. Andere machen eine Lehre." },
+    sb:   { cls: "sb", n: "Sekundarschule", s: "mittel", age: 12, span: 3, row: 3, rows: 2, sek: "Die Sekundarschule («Sek») ist mittel schwer. Danach machen die meisten Jugendlichen eine Lehre. Mit sehr guten Noten kann man auch an die FMS gehen. Ans Gymnasium kommt man im Aargau nur von der Bezirksschule." },
+    sc:   { cls: "sc", n: "Realschule", s: "am einfachsten", age: 12, span: 3, row: 5, rows: 1, sek: "Die Realschule ist am einfachsten. Die Klassen sind klein. Danach machen die Jugendlichen eine Lehre." },
     gym:  { cls: "gym", n: "Kantonsschule: Gymnasium", s: "4 Jahre · Matura", age: 15, span: 4, row: 1, rows: 1,
       alter: "15–19", dauer: "4 Jahre", abschluss: "gymnasiale Maturität («Matura»)",
       t: "Die Kantonsschule ist ein Gymnasium. Sie dauert vier Jahre. Man geht nach der Bezirksschule an die Kantonsschule. Am Ende macht man eine grosse Prüfung: die Matura. Mit der Matura kann man an der Universität oder an der ETH studieren. Kantonsschulen gibt es zum Beispiel in Aarau, Baden und Wohlen.",
@@ -485,7 +485,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
   var NEXT = {
     kg: ["prim"], prim: ["sa", "sb", "sc"],
     sa: ["gym", "fms", "efz", "bm"], sb: ["efz", "bm", "fms"], sc: ["eba", "efz"],
-    gym: ["uni", "fh"], fms: ["fh"], bm: ["fh", "uni"], efz: ["bm", "hbb"], eba: ["efz"],
+    gym: ["uni", "fh"], fms: ["fh"], bm: ["fh"], efz: ["bm", "hbb"], eba: ["efz"],
     uni: [], fh: [], hbb: []
   };
   var PREV = {};
@@ -558,9 +558,9 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     if (selected) buttons[selected].classList.remove("sel");
     selected = k; buttons[k].classList.add("sel");
     if (activePath) setPath(null, true);
-    var up = reach(k, PREV), down = reach(k, NEXT), E = [];
+    var up = reach(k, PREV), down = NEXT[k], E = [];
     up.concat([k]).forEach(function (a) { NEXT[a].forEach(function (b) { if (b === k || up.indexOf(b) > -1) E.push([a, b, true]); }); });
-    [k].concat(down).forEach(function (a) { NEXT[a].forEach(function (b) { E.push([a, b, false]); }); });
+    down.forEach(function (b) { E.push([k, b, false]); });
     highlight([k].concat(up, down), E);
     function chips(list, empty) {
       return list.length ? '<div class="chips">' + list.map(function (x) { return '<button type="button" class="' + B[x].cls + '" data-k="' + x + '">' + B[x].n + "</button>"; }).join("") + "</div>" : '<p class="none">' + empty + "</p>";
