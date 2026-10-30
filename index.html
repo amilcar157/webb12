@@ -173,7 +173,15 @@ nav a:hover { background: var(--hero-ink); color: var(--hero-bg); }
 .arrows path { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
 .arrows path.halo { stroke: var(--surface); stroke-width: 8; stroke-dasharray: none; }
 .arrows path.up { stroke-dasharray: 1 7; }
+.arrows path.out { stroke: var(--accent); }
+.arrows marker.mo path { fill: var(--accent); }
+.blk.from { outline: 2px dashed var(--ink); outline-offset: 2px; }
+.blk.to { outline: 3px solid var(--accent); outline-offset: 2px; }
+.badge.rtag { width: auto; height: auto; top: auto; display: block; }
+.rtag { position: absolute; bottom: 6px; right: 6px; font-size: .68rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--ink); color: var(--bg); line-height: 1.3; }
+.rtag.to { background: var(--accent); color: var(--accent-ink); }
 .arrows marker path { fill: var(--ink); stroke: none; }
+.arrows marker.mo path { fill: var(--accent); }
 .flow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
 .flow h4 { margin: 0 0 6px; font-family: var(--f-display); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .flow .chips button { cursor: pointer; border: 0; border-radius: 6px; padding: 4px 10px; font-size: .85rem; font-weight: 700; }
@@ -318,7 +326,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     <span class="eyebrow">1 · Überblick</span>
     <h2>Vom Kindergarten bis zur Hochschule: der Aargau</h2>
     <div class="dia-scroll"><div class="dia" id="dia" role="group" aria-label="Schulsystem nach Alter"></div></div>
-    <p class="hint">Klick auf einen Block. Die Pfeile zeigen: Woher kommt man (gepunktet)? Wohin geht man direkt danach? Oben stehen das Alter und die Klasse (KG = Kindergarten). Die Lehre mit EFZ dauert 3 oder 4 Jahre (hellere Farbe).</p>
+    <p class="hint">Klick auf einen Block. Die Blöcke mit «Woher?» kommen davor (gepunktete Pfeile). Die Blöcke mit «Danach» kommen direkt danach (rote Pfeile). Oben stehen das Alter und die Klasse (KG = Kindergarten). Die Lehre mit EFZ dauert 3 oder 4 Jahre (hellere Farbe).</p>
     <div class="detail" id="detail" aria-live="polite"></div>
   </section>
 
@@ -500,42 +508,59 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
   var SVGNS = "http://www.w3.org/2000/svg";
   var svg = document.createElementNS(SVGNS, "svg");
   svg.setAttribute("class", "arrows"); svg.setAttribute("aria-hidden", "true");
-  svg.innerHTML = '<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z"/></marker></defs><g></g>';
+  svg.innerHTML = '<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z"/></marker><marker id="aho" class="mo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z"/></marker></defs><g></g>';
   dia.appendChild(svg);
   var edges = [];
   function drawArrows() {
     var g = svg.querySelector("g"); g.innerHTML = "";
     var base = dia.getBoundingClientRect();
+    function R(id) { return buttons[id].getBoundingClientRect(); }
+    function horiz(e) { return R(e[1]).left >= R(e[0]).right - 4; }
+    // spread several arrows that leave/enter the same side of one block
+    function slot(e, side) {
+      var key = side === "in" ? e[1] : e[0];
+      var group = edges.filter(function (x) { return horiz(x) && (side === "in" ? x[1] : x[0]) === key; });
+      group.sort(function (x, y) { return R(side === "in" ? x[0] : x[1]).top - R(side === "in" ? y[0] : y[1]).top; });
+      return [group.indexOf(e), group.length];
+    }
     edges.forEach(function (e) {
-      var a = buttons[e[0]].getBoundingClientRect(), b = buttons[e[1]].getBoundingClientRect(), d;
-      var ax, ay, bx, by, IN = 8, OUT = 12;
-      if (b.left >= a.right - 4) {
-        ax = a.right - base.left - IN; ay = a.top + Math.min(a.height / 2, 38) - base.top;
-        bx = b.left - base.left + OUT; by = b.top + Math.min(b.height / 2, 38) - base.top;
+      var a = R(e[0]), b = R(e[1]), d, ax, ay, bx, by;
+      if (horiz(e)) {
+        var si = slot(e, "out"), ti = slot(e, "in");
+        var ah = Math.min(a.height, 76), bh = Math.min(b.height, 76);
+        ax = a.right - base.left - 8; ay = a.top - base.top + ah * (si[0] + 1) / (si[1] + 1);
+        bx = b.left - base.left + 12; by = b.top - base.top + bh * (ti[0] + 1) / (ti[1] + 1);
         var m = Math.max(24, (bx - ax) / 2);
         d = "M" + ax + " " + ay + " C" + (ax + m) + " " + ay + " " + (bx - m) + " " + by + " " + bx + " " + by;
       } else {
-        var x = (Math.max(a.left, b.left) + Math.min(a.right, b.right)) / 2 - base.left;
-        if (b.top > a.top) { ay = a.bottom - base.top - IN; by = b.top - base.top + OUT; } else { ay = a.top - base.top + IN; by = b.bottom - base.top - OUT; }
+        var x = Math.max(a.left, b.left) + 34 - base.left;
+        if (b.top > a.top) { ay = a.bottom - base.top - 18; by = b.top - base.top + 20; } else { ay = a.top - base.top + 18; by = b.bottom - base.top - 20; }
         d = "M" + x + " " + ay + " L" + x + " " + by;
       }
       var halo = document.createElementNS(SVGNS, "path");
       halo.setAttribute("d", d); halo.setAttribute("class", "halo"); g.appendChild(halo);
       var path = document.createElementNS(SVGNS, "path");
-      path.setAttribute("d", d); path.setAttribute("marker-end", "url(#ah)");
-      if (e[2]) path.setAttribute("class", "up");
+      path.setAttribute("d", d);
+      if (e[2]) { path.setAttribute("class", "up"); path.setAttribute("marker-end", "url(#ah)"); }
+      else if (e[3]) { path.setAttribute("class", "out"); path.setAttribute("marker-end", "url(#aho)"); }
+      else path.setAttribute("marker-end", "url(#ah)");
       g.appendChild(path);
     });
   }
-  window.addEventListener("resize", drawArrows);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawArrows);
-
-  function highlight(ids, newEdges) {
+  function highlight(ids, newEdges, roles) {
     clearBadges();
     edges = newEdges || [];
     if (!ids) { dia.classList.remove("pathmode"); drawArrows(); return; }
     dia.classList.add("pathmode");
-    ids.forEach(function (id) { buttons[id].classList.add("on"); });
+    ids.forEach(function (id) {
+      var btn = buttons[id]; btn.classList.add("on");
+      var r = roles && roles[id];
+      if (r) {
+        btn.classList.add(r);
+        var t = el("span", "badge rtag" + (r === "to" ? " to" : ""), r === "to" ? "Danach" : "Woher?");
+        t.setAttribute("aria-hidden", "true"); btn.appendChild(t);
+      }
+    });
     drawArrows();
   }
 
@@ -558,10 +583,10 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     if (selected) buttons[selected].classList.remove("sel");
     selected = k; buttons[k].classList.add("sel");
     if (activePath) setPath(null, true);
-    var up = reach(k, PREV), down = NEXT[k], E = [];
-    up.concat([k]).forEach(function (a) { NEXT[a].forEach(function (b) { if (b === k || up.indexOf(b) > -1) E.push([a, b, true]); }); });
-    down.forEach(function (b) { E.push([k, b, false]); });
-    highlight([k].concat(up, down), E);
+    var up = PREV[k], down = NEXT[k], E = [], roles = {};
+    up.forEach(function (a) { E.push([a, k, true]); roles[a] = "from"; });
+    down.forEach(function (b) { E.push([k, b, false, true]); roles[b] = "to"; });
+    highlight([k].concat(up, down), E, roles);
     function chips(list, empty) {
       return list.length ? '<div class="chips">' + list.map(function (x) { return '<button type="button" class="' + B[x].cls + '" data-k="' + x + '">' + B[x].n + "</button>"; }).join("") + "</div>" : '<p class="none">' + empty + "</p>";
     }
@@ -592,7 +617,7 @@ footer { font-size: .85rem; color: var(--muted); display: flex; flex-direction: 
     btn.addEventListener("click", function () { setPath(activePath === k ? null : k); });
     people.appendChild(btn); pBtns[k] = btn;
   });
-  function clearBadges() { dia.querySelectorAll(".badge").forEach(function (b) { b.remove(); }); Object.keys(buttons).forEach(function (k) { buttons[k].classList.remove("on"); }); }
+  function clearBadges() { dia.querySelectorAll(".badge").forEach(function (b) { b.remove(); }); Object.keys(buttons).forEach(function (k) { buttons[k].classList.remove("on", "from", "to"); }); }
   function setPath(k, keepDetail) {
     activePath = k; clearBadges();
     if (k && selected) { buttons[selected].classList.remove("sel"); selected = null; overview(); }
